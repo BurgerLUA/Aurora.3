@@ -246,3 +246,28 @@
 		user << "<span class='warning'>The bolt is open on \the [src.name]!</span>"
 		return
 	..()
+
+/obj/item/weapon/gun/projectile/boltaction/ratrifle
+	name = "\improper rat rifle"
+	desc = "A cheap, low caliber bolt-action rifle intended for the use of shooting rats. Shoots .38 rounds."
+	icon_state = "rat-rifle"
+	item_state = "shotgun"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
+	fire_sound = 'sound/weapons/rifleshot.ogg'
+	slot_flags = SLOT_BACK
+	load_method = SINGLE_CASING
+	handle_casings = HOLD_CASINGS
+	caliber = "38"
+	ammo_type = /obj/item/ammo_casing/c38
+	max_shells = 8
+	w_class = 3.0
+	force = 10
+	action_button_name = "Wield rifle"
+
+/obj/item/weapon/gun/projectile/boltaction/ratrifle/update_icon()
+	..()
+	if(wielded)
+		item_state = "rat-rifle-wielded"
+	else
+		item_state = "shotgun"
+	update_held_icon()
