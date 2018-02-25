@@ -410,3 +410,17 @@
 	if(!species)
 		return null
 	return species.default_language ? all_languages[species.default_language] : null
+
+mob/living/carbon/updatehealth()
+	if(CE_ZOMBIE in chem_effects)
+		health = 100
+		stat = CONSCIOUS
+		return
+
+	. = ..()
+
+mob/living/carbon/death(gibbed,deathmessage="seizes up and falls limp...")
+	if(CE_ZOMBIE in chem_effects && !gibbed)
+		return 0
+
+	. = ..()

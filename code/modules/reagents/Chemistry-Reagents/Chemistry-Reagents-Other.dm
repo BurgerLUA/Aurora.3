@@ -524,3 +524,20 @@
 	description = "A mythical compound, rumored to be the catalyst of fantastic reactions."
 	color = "#f4c430"
 	taste_description = "heavenly knowledge"
+
+
+//ZOMBIE GAMEMODE
+/datum/reagent/zombie_juice
+	name = "Zombie Juice"
+	id = "zombie_juice"
+	description = ""
+	color = "#00FF00"
+	taste_description = "brains"
+	metabolism = 0
+
+/datum/reagent/zombie_juice/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	M.add_chemical_effect(CE_ZOMBIE, 1000)
+	M.adjustToxLoss(25)
+	M.adjustBruteLoss(25)
+	M.adjustFireLoss(25)
+	M.adjustOxyLoss(25)

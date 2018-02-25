@@ -345,6 +345,15 @@
 		mode = SYRINGE_INJECT
 		update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/zombiejuice
+	name = "Syringe (zombie juice)"
+	desc = "Contains zombie juice."
+	Initialize()
+		. = ..()
+		reagents.add_reagent("zombie_juice", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
 /obj/item/weapon/reagent_containers/syringe/ld50_syringe/choral
 	Initialize()
 		. = ..()
