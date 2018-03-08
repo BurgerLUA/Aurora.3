@@ -212,7 +212,12 @@
 
 	if(istype(M) && !istype(M, /mob/abstract))
 		M.color = initial(M.color)
-
+	
+/datum/reagent/water/initial_touch(var/mob/living/carbon/M, var/alien)
+	if(alien == IS_TAJARA)
+		M.adjustHalLoss(25)
+		M.emote("hisses!")
+		
 /datum/reagent/water/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
 	if(istype(M, /mob/living/carbon/slime))
 		var/mob/living/carbon/slime/S = M

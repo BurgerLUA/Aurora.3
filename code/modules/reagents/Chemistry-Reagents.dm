@@ -51,6 +51,8 @@
 
 	if(!dose && volume)//If dose is currently zero, we do the first effect
 		initial_effect(M, alien)
+		if(location == CHEM_TOUCH)
+			intital_touch(M,alien)
 
 	if(overdose && (dose > overdose) && (location != CHEM_TOUCH))
 		overdose(M, alien)
@@ -76,6 +78,9 @@
 //Initial effect is called once when the reagent first starts affecting a mob.
 /datum/reagent/proc/initial_effect(var/mob/living/carbon/M, var/alien)
 	return
+
+/datum/reagent/proc/initial_touch(var/mob/living/carbon/M, var/alien)
+	return	
 
 /datum/reagent/proc/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	return
