@@ -1,3 +1,4 @@
+/*
 /obj/item/weapon/pack/spaceball
 	name = "\improper Spaceball booster pack"
 	desc = "Officially licensed to take your money."
@@ -21,3 +22,4 @@
 		P.back_icon = "card_back_spaceball"
 
 		cards += P
+*/

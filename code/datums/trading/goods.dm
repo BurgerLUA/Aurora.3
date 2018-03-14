@@ -37,8 +37,8 @@
 		/obj/item/toy/sword                   = TRADER_THIS_TYPE,
 		/obj/item/toy/bosunwhistle            = TRADER_THIS_TYPE,
 		/obj/item/weapon/board                = TRADER_THIS_TYPE,
-		/obj/item/weapon/deck                 = TRADER_SUBTYPES_ONLY,
-		/obj/item/weapon/pack                 = TRADER_SUBTYPES_ONLY,
+		///obj/item/weapon/deck                 = TRADER_SUBTYPES_ONLY,
+		///obj/item/weapon/pack                 = TRADER_SUBTYPES_ONLY,
 		/obj/item/weapon/dice                 = TRADER_ALL
 	)
 

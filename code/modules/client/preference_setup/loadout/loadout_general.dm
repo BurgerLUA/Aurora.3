@@ -10,15 +10,16 @@
 	display_name = "pack of gaming dice"
 	path = /obj/item/weapon/storage/pill_bottle/dice/gaming
 
-/datum/gear/cards
+/*
+datum/gear/cards
 	display_name = "deck of cards"
 	path = /obj/item/weapon/deck/cards
 
-/datum/gear/tarot
+datum/gear/tarot
 	display_name = "deck of tarot cards"
 	path = /obj/item/weapon/deck/tarot
 
-/datum/gear/holder
+datum/gear/holder
 	display_name = "card holder"
 	path = /obj/item/weapon/deck/holder
 
@@ -29,6 +30,7 @@
 /datum/gear/spaceball_pack
 	display_name = "spaceball booster pack"
 	path = /obj/item/weapon/pack/spaceball
+*/
 
 /datum/gear/flask
 	display_name = "flask"

@@ -1,3 +1,4 @@
+/*
 /obj/item/weapon/pack/cardemon
 	name = "\improper Cardemon booster pack"
 	desc = "Finally! A children's card game in space!"
@@ -28,3 +29,4 @@
 			P.card_icon += "_[rarity]"
 		P.back_icon = "card_back_cardemon"
 		cards += P
+*/
