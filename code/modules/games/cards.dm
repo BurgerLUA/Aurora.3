@@ -65,9 +65,13 @@ var/list/generated_cards = list()
 	toggle_visiblity()
 
 /obj/item/weapon/card/attackby(obj/O as obj, mob/user as mob)
+	user << O
 	if(istype(O,/obj/item/weapon/card))
 		add_cards(O)
 		return
+	else
+		deal_to(user,user)
+
 
 	..()
 
