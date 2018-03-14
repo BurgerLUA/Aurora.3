@@ -1,18 +1,31 @@
 var/list/generated_cards = list()
 
-/datum/cards/normal
-	var/id = "normal"
+/datum/cards/
+	var/id = "base"
 	var/list/suits = list("spades" = "black","clubs" = "black","diamonds" = "red","hearts" = "red")
 	var/list/lesser_types = list("ace","two","three","four","five","six","seven","eight","nine","ten")
 	var/list/greater_types = list("jack","queen","king")
 	var/list/special_types = list("joker","joker")
 
-/datum/card/normal
-	var/name = "a playing card"
+/datum/cards/normal
+	id = "normal"
+	suits = list("spades" = "black","clubs" = "black","diamonds" = "red","hearts" = "red")
+	lesser_types = list("ace","two","three","four","five","six","seven","eight","nine","ten")
+	greater_types = list("jack","queen","king")
+	special_types = list("joker","joker")
+
+/datum/card
+	var/name = "a glitched card"
 	var/front_icon = "card_back"
 	var/back_icon = "card_back"
 
-/datum/cards/normal/proc/generate_cards()
+/datum/card/normal
+	name = "a playing card"
+	front_icon = "card_back"
+	back_icon = "card_back"
+
+
+/datum/cards/proc/generate_cards()
 	generated_cards = list()
 	for(var/suit in suits)
 		var/color = suits[suit]
@@ -23,8 +36,8 @@ var/list/generated_cards = list()
 		for(var/special in special_types)
 			generate_card(special,special,"cardback")
 
-/datum/cards/normal/proc/generate_card(var/name,var/front_icon,var/back_icon)
-	var/datum/card/normal/d = new()
+/datum/cards/proc/generate_card(var/name,var/front_icon,var/back_icon)
+	var/datum/card/d = new()
 	d.name = name
 	d.front_icon = front_icon
 	d.back_icon = back_icon
@@ -52,10 +65,10 @@ var/list/generated_cards = list()
 /obj/item/weapon/card/normal/deck
 	name = "a deck of cards"
 	desc = "a deck of playing cards."
+	held_type = "deck"
 
 /obj/item/weapon/card/normal/deck/New()
 	. = ..()
-	held_type = "deck"
 	var/list/desiredlist = generated_cards[deck_id]
 	for(var/card in desiredlist)
 		deck_contents += card
@@ -71,8 +84,6 @@ var/list/generated_cards = list()
 		return
 	else
 		deal_to(user,user)
-
-
 	..()
 
 /obj/item/weapon/card/AltClick(var/mob/user)
@@ -210,7 +221,7 @@ var/list/generated_cards = list()
 	if(held_type != "deck" && !deck_contents.len)
 		qdel(src)
 		return
-	else if(contents.len > 1 && deck_contents.len < 7)
+	else if(deck_contents.len > 1 && deck_contents.len < 7)
 		held_type = "multi"
 	else
 		held_type = "single"
