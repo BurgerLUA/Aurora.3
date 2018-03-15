@@ -33,8 +33,7 @@
 
 	shuttle_controller.setup_shuttle_docks()
 
-	for(var/datum/cards/subtype in subtypesof(/datum/cards))
-		subtype.generate_cards()
+	generate_playing_cards()
 
 	if (config.fastboot)
 		admin_notice("<span class='notice'><b>Fastboot is enabled; some features may not be available.</b></span>", R_DEBUG)
@@ -47,3 +46,8 @@
 	all_areas += A
 
 	sortTim(all_areas, /proc/cmp_name_asc)
+
+/proc/generate_playing_cards()
+	for(var/path in subtypesof(/datum/cards))
+		var/datum/cards/subtype = new path()
+		subtype.generate_cards()

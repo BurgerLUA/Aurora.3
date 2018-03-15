@@ -1,14 +1,14 @@
 var/list/generated_cards = list()
 
 /datum/cards/
-	var/id = "base"
+	var/deck_id = "base"
 	var/list/suits = list("spades" = "black","clubs" = "black","diamonds" = "red","hearts" = "red")
 	var/list/lesser_types = list("ace","two","three","four","five","six","seven","eight","nine","ten")
 	var/list/greater_types = list("jack","queen","king")
 	var/list/special_types = list("joker","joker")
 
 /datum/cards/normal
-	id = "normal"
+	deck_id = "normal"
 	suits = list("spades" = "black","clubs" = "black","diamonds" = "red","hearts" = "red")
 	lesser_types = list("ace","two","three","four","five","six","seven","eight","nine","ten")
 	greater_types = list("jack","queen","king")
@@ -21,30 +21,27 @@ var/list/generated_cards = list()
 
 /datum/card/normal
 	name = "a playing card"
-	front_icon = "card_back"
-	back_icon = "card_back"
-
 
 /datum/cards/proc/generate_cards()
 	generated_cards = list()
 	for(var/suit in suits)
 		var/color = suits[suit]
 		for(var/lesser in lesser_types)
-			generate_card("[lesser] of [suit]","[color]_num","cardback")
+			generate_card("[lesser] of [suit]","[color]_num","cardback",deck_id)
 		for(var/greater in greater_types)
-			generate_card("[greater] of [suit]","[color]_col","cardback")
+			generate_card("[greater] of [suit]","[color]_col","cardback",deck_id)
 		for(var/special in special_types)
-			generate_card(special,special,"cardback")
+			generate_card(special,special,"cardback",deck_id)
 
-/datum/cards/proc/generate_card(var/name,var/front_icon,var/back_icon)
+/datum/cards/proc/generate_card(var/name,var/front_icon,var/back_icon,var/deck_id)
 	var/datum/card/d = new()
 	d.name = name
 	d.front_icon = front_icon
 	d.back_icon = back_icon
-	if(!generated_cards[id])
-		generated_cards[id] = list()
-
-	generated_cards[id] += d
+	if(!generated_cards[deck_id])
+		generated_cards[deck_id] = list()
+	admin_notice("<span class='notice'><b>GENERATED CARD: [d.name] FOR DECK [deck_id]</b></span>", R_DEBUG)
+	generated_cards[deck_id] += d
 
 /obj/item/weapon/card/
 	name = "a card"
@@ -218,7 +215,9 @@ var/list/generated_cards = list()
 
 /obj/item/weapon/card/update_icon(var/direction = 0) //Also updates names
 
-	if(held_type != "deck" && !deck_contents.len)
+	world << deck_contents
+
+	if(!deck_contents.len)
 		qdel(src)
 		return
 	else if(deck_contents.len > 1 && deck_contents.len < 7)
@@ -259,6 +258,7 @@ var/list/generated_cards = list()
 				var/datum/card/normal/topcard = deck_contents[1]
 				icon_state = topcard.front_icon
 			else
+				world << deck_contents.len
 				var/datum/card/normal/topcard = deck_contents[deck_contents.len]
 				icon_state = topcard.back_icon
 
