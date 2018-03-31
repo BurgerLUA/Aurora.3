@@ -58,7 +58,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
-/obj/item/clothing/suit/greatcoat
+/obj/item/clothing/suit/greatcoat //THIS IS LITERALLY A NAZI COAT, WHY DOES THIS EXIST?
 	name = "great coat"
 	desc = "A heavy great coat"
 	icon_state = "nazi"

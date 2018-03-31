@@ -212,7 +212,7 @@
 	worn_state = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/female
-	name = "executive suit"
+	name = "executive female suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_fem"
 	item_state = "lawyer_black"
@@ -579,28 +579,15 @@
 	body_parts_covered = 0
 
 /obj/item/clothing/under/stripper/stripper_pink
-	name = "pink swimsuit"
+	name = "skimpy pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
 	icon_state = "stripper_p_under"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
-	name = "green swimsuit"
+	name = "skimpy green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g_under"
-	siemens_coefficient = 1
-
-/obj/item/clothing/suit/stripper/stripper_pink
-	name = "pink skimpy dress"
-	desc = "A rather skimpy pink dress."
-	icon_state = "stripper_p_over"
-	siemens_coefficient = 1
-
-/obj/item/clothing/suit/stripper/stripper_green
-	name = "green skimpy dress"
-	desc = "A rather skimpy green dress."
-	icon_state = "stripper_g_over"
-	item_state = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini

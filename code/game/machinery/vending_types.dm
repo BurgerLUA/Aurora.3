@@ -772,3 +772,266 @@
 		/obj/item/weapon/vending_refill/robo = 1
 
 	)
+
+//Clothes
+/obj/machinery/vending/clothes
+	name = "ClothesMate"
+	desc = "Now with 200% more snowflake!"
+	icon_state = "clothes"
+	icon_deny = "clothes-deny"
+	vend_id = "clothes"
+	products = list()
+	prices = list()
+	contraband = list()
+	premium = list()
+
+/obj/machinery/vending/clothes/jumpsuits
+	name = "ClothesMate Jumpsuits"
+	desc = "Now with 200% more snowflake! This one contains jumpsuits."
+	products = list(
+		/obj/item/clothing/under/color/black = 4,
+		/obj/item/clothing/under/color/blue = 4,
+		/obj/item/clothing/under/color/green = 4,
+		/obj/item/clothing/under/color/grey = 8,
+		/obj/item/clothing/under/color/pink = 4,
+		/obj/item/clothing/under/color/red = 4,
+		/obj/item/clothing/under/color/white = 8,
+		/obj/item/clothing/under/color/yellow = 4,
+		/obj/item/clothing/shoes/black = 4,
+		/obj/item/clothing/shoes/blue = 4,
+		/obj/item/clothing/shoes/green = 4,
+		/obj/item/clothing/shoes/red = 4,
+		/obj/item/clothing/shoes/white = 4,
+		/obj/item/clothing/shoes/yellow = 4,
+		/obj/item/clothing/suit/storage/toggle/brown_jacket/nanotrasen = 2,
+		/obj/item/clothing/suit/storage/leather_jacket/nanotrasen = 2
+	)
+	prices = list(
+		/obj/item/clothing/under/color/black = 40,
+		/obj/item/clothing/under/color/blue = 40,
+		/obj/item/clothing/under/color/green = 40,
+		/obj/item/clothing/under/color/grey = 20,
+		/obj/item/clothing/under/color/pink = 40,
+		/obj/item/clothing/under/color/red = 40,
+		/obj/item/clothing/under/color/white = 30,
+		/obj/item/clothing/under/color/yellow = 40,
+		/obj/item/clothing/shoes/black = 40,
+		/obj/item/clothing/shoes/blue = 40,
+		/obj/item/clothing/shoes/green = 40,
+		/obj/item/clothing/shoes/red = 40,
+		/obj/item/clothing/shoes/white = 40,
+		/obj/item/clothing/shoes/yellow = 40
+	)
+	contraband = list(
+		/obj/item/clothing/under/color/orange = 4,
+		/obj/item/clothing/under/psyche = 2,
+		/obj/item/clothing/under/rank/vice = 2,
+		/obj/item/clothing/under/johnny = 2,
+	)
+	premium = list(
+		/obj/item/clothing/shoes/rainbow = 4,
+		/obj/item/clothing/under/rainbow = 4
+
+	)
+
+/obj/machinery/vending/suits
+	name = "ClothesMate Formal"
+	desc = "Now with 200% more snowflake This one contains expensive suits and dresses."
+	icon_state = "clothes"
+	icon_deny = "clothes-deny"
+	vend_id = "clothes"
+	products = list(
+		//BASIC
+		/obj/item/clothing/under/sl_suit = 2,
+		/obj/item/clothing/under/waiter = 2,
+		/obj/item/clothing/under/assistantformal = 2,
+		/obj/item/clothing/under/lawyer/oldman = 2,
+		/obj/item/clothing/under/librarian = 2,
+		/obj/item/clothing/suit/wcoat = 2,
+
+		//EXPENSIVE
+		/obj/item/clothing/under/scratch = 2,
+		/obj/item/clothing/under/gentlesuit = 2,
+		/obj/item/clothing/under/suit_jacket = 2,
+		/obj/item/clothing/under/suit_jacket/really_black = 2,
+		/obj/item/clothing/under/suit_jacket/female = 2,
+		/obj/item/clothing/under/suit_jacket/red = 2,
+		/obj/item/clothing/under/suit_jacket/charcoal = 2,
+		/obj/item/clothing/under/suit_jacket/navy = 2,
+		/obj/item/clothing/under/suit_jacket/burgundy = 2,
+		/obj/item/clothing/under/suit_jacket/checkered = 2,
+		/obj/item/clothing/under/suit_jacket/tan = 2,
+		/obj/item/clothing/under/lawyer = 2,
+		/obj/item/clothing/under/lawyer/black = 2,
+		/obj/item/clothing/under/lawyer/female = 2,
+		/obj/item/clothing/under/lawyer/red = 2,
+		/obj/item/clothing/under/lawyer/blue = 2,
+		/obj/item/clothing/under/lawyer/bluesuit = 2,
+		/obj/item/clothing/under/lawyer/purpsuit = 2,
+		/obj/item/clothing/suit/storage/lawyer/purpjacket = 2,
+		/obj/item/clothing/suit/storage/toggle/lawyer/bluejacket = 2,
+
+		//DRESS
+		/obj/item/clothing/under/dress/dress_fire = 2,
+		/obj/item/clothing/under/dress/dress_green = 2,
+		/obj/item/clothing/under/dress/dress_orange = 2,
+		/obj/item/clothing/under/dress/dress_pink = 2,
+		/obj/item/clothing/under/dress/dress_yellow = 2,
+		/obj/item/clothing/under/sundress = 2,
+		/obj/item/clothing/under/sundress_white = 2,
+
+		//WEW
+		/obj/item/clothing/under/wedding/bride_white = 1,
+
+		//WEEB
+		/obj/item/clothing/under/cheongsam = 2,
+		/obj/item/clothing/under/cheongsam/red = 2,
+		/obj/item/clothing/under/cheongsam/blue = 2,
+		/obj/item/clothing/under/cheongsam/green = 2,
+		/obj/item/clothing/under/cheongsam/purple = 2,
+	)
+	prices = list()
+	contraband = list(
+		/obj/item/clothing/under/dress/dress_saloon = 2,
+		/obj/item/clothing/under/redcoat = 2,
+		/obj/item/clothing/under/kilt = 2
+
+	)
+	premium = list(
+		/obj/item/clothing/under/rank/mailman = 2,
+	)
+
+/obj/machinery/vending/clothes/swim
+	name = "ClothesMate Swimwear"
+	desc = "Now with 200% more snowflake! This one contains very questionable swimwear."
+	icon_state = "clothes"
+	icon_deny = "clothes-deny"
+	vend_id = "clothes"
+	products = list(
+		//Male
+		/obj/item/clothing/under/shorts = 2,
+		/obj/item/clothing/under/shorts/red = 2,
+		/obj/item/clothing/under/shorts/green = 2,
+		/obj/item/clothing/under/shorts/blue = 2,
+		/obj/item/clothing/under/shorts/black = 2,
+		/obj/item/clothing/under/shorts/grey = 2,
+		//Female
+		/obj/item/clothing/under/swimsuit/black = 2,
+		/obj/item/clothing/under/swimsuit/blue = 2,
+		/obj/item/clothing/under/swimsuit/purple = 2,
+		/obj/item/clothing/under/swimsuit/green = 2,
+		/obj/item/clothing/under/swimsuit/red = 2
+	)
+	prices = list()
+	contraband = list(
+		//Slutty
+		/obj/item/clothing/under/stripper/stripper_pink = 2,
+		/obj/item/clothing/under/stripper/stripper_green = 2,
+		/obj/item/clothing/under/stripper/stripper_green = 2,
+		/obj/item/clothing/under/stripper/mankini = 2
+	)
+	premium = list()
+
+
+/obj/machinery/vending/clothes/informal
+	name = "ClothesMate Informal"
+	desc = "Now with 200% more snowflake! This one contains moderately priced informal clothing."
+	icon_state = "clothes"
+	icon_deny = "clothes-deny"
+	vend_id = "clothes"
+	products = list(
+		//Jackets
+		/obj/item/clothing/suit/storage/toggle/bomber = 2,
+		/obj/item/clothing/suit/storage/hooded/wintercoat = 2,
+		/obj/item/clothing/suit/storage/toggle/trench = 2,
+		/obj/item/clothing/suit/storage/toggle/trench/grey = 2,
+		/obj/item/clothing/suit/storage/toggle/hoodie = 2,
+		/obj/item/clothing/suit/storage/toggle/hoodie/black = 2,
+		/obj/item/clothing/suit/leathercoat = 2,
+		/obj/item/clothing/suit/browncoat = 2,
+		/obj/item/clothing/suit/neocoat= 2,
+
+		//Ponchos - Was going to put this in Xeno wear but I didn't want to start a race war
+		/obj/item/clothing/suit/poncho = 2,
+		/obj/item/clothing/suit/poncho/green = 2,
+		/obj/item/clothing/suit/poncho/red = 2,
+		/obj/item/clothing/suit/poncho/purple = 2,
+		/obj/item/clothing/suit/poncho/blue = 2,
+
+		//Skirts.
+		/obj/item/clothing/under/blackskirt = 2,
+		/obj/item/clothing/under/dress/plaid_blue = 2,
+		/obj/item/clothing/under/dress/plaid_red = 2,
+		/obj/item/clothing/under/dress/plaid_purple = 2,
+
+		//Weird
+		/obj/item/clothing/under/overalls = 2,
+		/obj/item/clothing/under/serviceoveralls = 2,
+		/obj/item/clothing/under/sweater = 2,
+		/obj/item/clothing/under/blazer = 2,
+		/obj/item/clothing/suit/apron/overalls = 2,
+		/obj/item/clothing/suit/apron = 2,
+		/obj/item/clothing/suit/storage/toggle/tracksuit = 2,
+
+		//Flannel
+		/obj/item/clothing/suit/storage/toggle/flannel = 2,
+		/obj/item/clothing/suit/storage/toggle/flannel/red = 2,
+		/obj/item/clothing/suit/storage/toggle/flannel/blue = 2,
+		/obj/item/clothing/suit/storage/toggle/flannel/gray = 2,
+		/obj/item/clothing/suit/storage/toggle/flannel/purple = 2,
+		/obj/item/clothing/suit/storage/toggle/flannel/yellow = 2,
+
+		//Pants
+		/obj/item/clothing/under/pants = 2,
+		/obj/item/clothing/under/pants/track = 2,
+		/obj/item/clothing/under/pants/classic = 2,
+		/obj/item/clothing/under/pants/musthang = 2,
+		/obj/item/clothing/under/pants/jeansblack = 2,
+		/obj/item/clothing/under/pants/youngfolksjeans = 2,
+		/obj/item/clothing/under/pants/white = 2,
+		/obj/item/clothing/under/pants/black = 2,
+		/obj/item/clothing/under/pants/red = 2,
+		/obj/item/clothing/under/pants/tan = 2,
+		/obj/item/clothing/under/pants/khaki = 2,
+		/obj/item/clothing/under/pants/camo = 2
+		)
+	prices = list()
+	contraband = list(
+		/obj/item/clothing/under/mime = 2,
+		/obj/item/clothing/suit/suspenders = 2,
+		/obj/item/clothing/under/rank/clown = 2,
+		/obj/item/clothing/under/sexyclown = 2,
+		/obj/item/clothing/under/johnny = 2,
+		/obj/item/clothing/under/schoolgirl = 2,
+		/obj/item/clothing/under/soviet = 2,
+		/obj/item/clothing/under/pirate = 2,
+		/obj/item/clothing/under/gladiator = 2,
+		/obj/item/clothing/suit/imperium_monk = 2,
+	)
+	premium = list(
+		/obj/item/clothing/suit/ianshirt
+	)
+
+/obj/machinery/vending/clothes/xeno
+	name = "ClothesMate Xeno"
+	desc = "Clothes intended to fit non-human species. Now with 300% more snowflake!"
+	icon_state = "clothes"
+	icon_deny = "clothes-deny"
+	vend_id = "clothes"
+	products = list(
+		/obj/item/clothing/suit/unathi/robe = 2,
+		/obj/item/clothing/suit/unathi/robe/robe_coat = 2,
+		/obj/item/clothing/suit/unathi/mantle = 2,
+		/obj/item/clothing/suit/tajaran/furs = 2,
+	)
+	prices = list()
+	contraband = list(
+		/obj/item/clothing/suit/storage/hooded/wintercoat/corgi = 2,
+		/obj/item/clothing/head/winterhood/corgi = 2,
+		/obj/item/clothing/suit/storage/hooded/wintercoat/carp = 2,
+		/obj/item/clothing/head/winterhood/carp = 2,
+		/obj/item/clothing/suit/xenos = 2,
+		/obj/item/clothing/suit/monkeysuit = 2,
+		/obj/item/clothing/suit/chickensuit = 2,
+	)
+	premium = list(/obj/item/clothing/head/tajaran/scarf = 2)

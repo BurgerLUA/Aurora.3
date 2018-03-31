@@ -89,6 +89,14 @@
 	icon_state = "fitness"
 	allow_nightmode = 1
 
+/area/crew_quarters/fitness/locker
+	name = "\improper Fitness Locker Room"
+	icon_state = "locker"
+
+/area/crew_quarters/fitness/hottub
+	name = "\improper Fitness Hot Tub"
+	icon_state = "red"
+
 /area/crew_quarters/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
