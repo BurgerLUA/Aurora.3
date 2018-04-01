@@ -580,14 +580,14 @@
 
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "skimpy pink swimsuit"
-	desc = "A rather skimpy pink swimsuit."
-	icon_state = "stripper_p_under"
+	desc = "A rather skimpy pink swimsuit. Completely work inapprorpiate."
+	icon_state = "stripper_pink"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "skimpy green swimsuit"
-	desc = "A rather skimpy green swimsuit."
-	icon_state = "stripper_g_under"
+	desc = "A rather skimpy green swimsuit. Completely work inapprorpiate."
+	icon_state = "stripper_green"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini

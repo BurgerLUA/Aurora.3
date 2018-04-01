@@ -1,5 +1,5 @@
 /obj/item/device/radio/intercom
-	name = "station intercom (General)"
+	name = "Station Intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
@@ -8,6 +8,31 @@
 	flags = CONDUCT | NOBLOODY
 	var/number = 0
 	var/obj/machinery/abstract/intercom_listener/power_interface
+
+/obj/item/device/radio/intercom/general
+	name = "Station Intercom (Common)"
+	frequency = PUB_FREQ
+	canhear_range = 7
+
+/obj/item/device/radio/intercom/general/north //Icons are flipped for some reason???
+	dir = 2
+	pixel_x = 0
+	pixel_y = 20
+
+/obj/item/device/radio/intercom/general/south
+	dir = 1
+	pixel_x = 0
+	pixel_y = -20
+
+/obj/item/device/radio/intercom/general/east
+	dir = 8
+	pixel_x = 20
+	pixel_y = 0
+
+/obj/item/device/radio/intercom/general/west
+	dir = 4
+	pixel_x = -20
+	pixel_y = 0
 
 /obj/item/device/radio/intercom/custom
 	name = "station intercom (Custom)"

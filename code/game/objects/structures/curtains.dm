@@ -62,6 +62,11 @@
 	color = "#ACD1E9"
 	alpha = 200
 
+/obj/structure/curtain/open/changing
+	name = "changing room curtain"
+	color = "#222222"
+	alpha = 225
+
 /obj/structure/curtain/open/shower/engineering
 	color = "#FFA500"
 
