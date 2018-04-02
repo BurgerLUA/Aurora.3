@@ -10,7 +10,7 @@
 	var/obj/machinery/abstract/intercom_listener/power_interface
 
 /obj/item/device/radio/intercom/general
-	name = "Station Intercom (Common)"
+	name = "Station Intercom"
 	frequency = PUB_FREQ
 	canhear_range = 7
 
