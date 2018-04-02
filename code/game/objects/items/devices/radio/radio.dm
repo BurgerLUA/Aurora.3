@@ -40,6 +40,7 @@ var/global/list/default_medbay_channels = list(
 	var/list/channels = list() //see communications.dm for full list. First channel is a "default" for :h
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrypted radio
+	var/locked_frequency = 0 //Locked frequency, if any. Locked means you can't change the frequency to the frequency other than this.
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throw_speed = 2
@@ -55,6 +56,10 @@ var/global/list/default_medbay_channels = list(
 	var/list/datum/radio_frequency/secure_radio_connections = new
 
 	proc/set_frequency(new_frequency)
+
+		if(locked_frequency && frequency != locked_frequency)
+			return
+
 		SSradio.remove_object(src, frequency)
 		frequency = new_frequency
 		radio_connection = SSradio.add_object(src, frequency, RADIO_CHAT)
@@ -122,6 +127,8 @@ var/global/list/default_medbay_channels = list(
 		ui.open()
 
 /obj/item/device/radio/proc/list_channels(var/mob/user)
+	if(locked_frequency)
+		return ""
 	return list_internal_channels(user)
 
 /obj/item/device/radio/proc/list_secure_channels(var/mob/user)

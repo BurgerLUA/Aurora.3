@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom
 	name = "Station Intercom"
-	desc = "Talk through this."
+	desc = "A wall-mounted speaker/microphone system that allows cross-station communication with respect to access levels."
 	icon_state = "intercom"
 	anchored = 1
 	w_class = 4.0
@@ -10,9 +10,11 @@
 	var/obj/machinery/abstract/intercom_listener/power_interface
 
 /obj/item/device/radio/intercom/general
-	name = "Station Intercom"
+	name = "Station Intercom (General)"
 	frequency = PUB_FREQ
-	canhear_range = 7
+	canhear_range = 10
+	broadcasting = 0
+	listening = 1
 
 /obj/item/device/radio/intercom/general/north //Icons are flipped for some reason???
 	dir = 2
@@ -34,14 +36,95 @@
 	pixel_x = -20
 	pixel_y = 0
 
-/obj/item/device/radio/intercom/custom
-	name = "station intercom (Custom)"
+//Interogation
+/obj/item/device/radio/intercom/interrogation
+	name = "Secure Intercom (Interrogation)"
+	frequency  = 1449
+	canhear_range = 10
 	broadcasting = 0
 	listening = 0
+	locked_frequency = 1449
 
-/obj/item/device/radio/intercom/interrogation
-	name = "station intercom (Interrogation)"
-	frequency  = 1449
+/obj/item/device/radio/intercom/interrogation/north
+	dir = 2
+	pixel_x = 0
+	pixel_y = 20
+
+/obj/item/device/radio/intercom/interrogation/south
+	dir = 1
+	pixel_x = 0
+	pixel_y = -20
+
+/obj/item/device/radio/intercom/interrogation/east
+	dir = 8
+	pixel_x = 20
+	pixel_y = 0
+
+/obj/item/device/radio/intercom/interrogation/west
+	dir = 4
+	pixel_x = -20
+	pixel_y = 0
+
+//AI
+/obj/item/device/radio/intercom/ai/
+	name = "Secure Intercom (AI Private)"
+	frequency = AI_FREQ
+	broadcasting = 0
+	listening = 1
+	locked_frequency = AI_FREQ
+
+/obj/item/device/radio/intercom/ai/north
+	dir = 2
+	pixel_x = 0
+	pixel_y = 20
+
+/obj/item/device/radio/intercom/ai/south
+	dir = 1
+	pixel_x = 0
+	pixel_y = -20
+
+/obj/item/device/radio/intercom/ai/east
+	dir = 8
+	pixel_x = 20
+	pixel_y = 0
+
+/obj/item/device/radio/intercom/ai/west
+	dir = 4
+	pixel_x = -20
+	pixel_y = 0
+
+//Command
+/obj/item/device/radio/intercom/command/
+	name = "Secure Intercom (Command)"
+	frequency = COMM_FREQ
+	broadcasting = 1
+	listening = 1
+	locked_frequency = COMM_FREQ
+
+/obj/item/device/radio/intercom/command/north
+	dir = 2
+	pixel_x = 0
+	pixel_y = 20
+
+/obj/item/device/radio/intercom/command/south
+	dir = 1
+	pixel_x = 0
+	pixel_y = -20
+
+/obj/item/device/radio/intercom/command/east
+	dir = 8
+	pixel_x = 20
+	pixel_y = 0
+
+/obj/item/device/radio/intercom/command/west
+	dir = 4
+	pixel_x = -20
+	pixel_y = 0
+
+
+obj/item/device/radio/intercom/confessional
+	name = "confessional intercom"
+	frequency = 1480
 
 /obj/item/device/radio/intercom/private
 	name = "station intercom (Private)"
@@ -160,23 +243,3 @@
 
 /obj/item/device/radio/intercom/broadcasting
 	broadcasting = 1
-
-/obj/item/device/radio/intercom/locked
-    var/locked_frequency
-
-/obj/item/device/radio/intercom/locked/set_frequency(var/frequency)
-	if(frequency == locked_frequency)
-		..(locked_frequency)
-
-/obj/item/device/radio/intercom/locked/list_channels()
-	return ""
-
-/obj/item/device/radio/intercom/locked/ai_private
-	name = "\improper AI intercom"
-	frequency = AI_FREQ
-	broadcasting = 1
-	listening = 1
-
-/obj/item/device/radio/intercom/locked/confessional
-	name = "confessional intercom"
-	frequency = 1480
