@@ -2362,8 +2362,6 @@
 #include "maps\aurora\code\aurora_lifts.dm"
 #include "maps\aurora\code\aurora_shuttles.dm"
 #include "maps\aurora\code\aurora_unittest.dm"
-#include "maps\aurora\random\crashed.dmm"
-#include "maps\aurora\random\medical.dmm"
 #include "maps\exodus\code\exodus.dm"
 #include "maps\exodus\code\exodus_areas.dm"
 #include "maps\exodus\code\exodus_holodeck.dm"
