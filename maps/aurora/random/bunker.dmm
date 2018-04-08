@@ -1,0 +1,40 @@
+"a" = (/turf/simulated/open/airless,/area/mine/unexplored)
+"b" = (/turf/simulated/wall/r_wall,/area/mine/unexplored)
+"c" = (/obj/structure/sign/goldenplaque,/turf/simulated/wall/r_wall,/area/mine/unexplored)
+"d" = (/turf/simulated/mineral/random,/area/mine/unexplored)
+"e" = (/obj/structure/table/steel,/obj/random/ammo,/turf/simulated/floor/airless,/area/mine/unexplored)
+"f" = (/obj/structure/table/steel,/obj/random/projectile,/turf/simulated/floor/airless,/area/mine/unexplored)
+"g" = (/obj/structure/table/steel,/obj/random/spacecash,/turf/simulated/floor/airless,/area/mine/unexplored)
+"h" = (/turf/simulated/floor/airless,/area/mine/unexplored)
+"i" = (/turf/simulated/mineral/random/higher_chance,/area/mine/unexplored)
+"j" = (/obj/structure/table/steel,/obj/random/handgun,/turf/simulated/floor/airless,/area/mine/unexplored)
+"k" = (/obj/structure/table/steel,/obj/random/medical,/turf/simulated/floor/airless,/area/mine/unexplored)
+"l" = (/obj/structure/table/steel,/obj/random/energy,/turf/simulated/floor/airless,/area/mine/unexplored)
+"m" = (/obj/effect/landmark/corpse/syndicatesoldier,/turf/simulated/floor/airless,/area/mine/unexplored)
+"n" = (/obj/structure/table/steel,/obj/random/tech_supply,/turf/simulated/floor/airless,/area/mine/unexplored)
+"o" = (/obj/item/weapon/ladder_mobile,/turf/simulated/floor/airless,/area/mine/unexplored)
+"p" = (/obj/structure/table/steel,/obj/random/contraband,/turf/simulated/floor/airless,/area/mine/unexplored)
+"q" = (/obj/effect/decal/remains,/turf/simulated/floor/airless,/area/mine/unexplored)
+"r" = (/obj/item/device/gps/strange,/turf/simulated/floor/airless,/area/mine/unexplored)
+"s" = (/obj/item/weapon/landmine/frag,/turf/simulated/floor/airless,/area/mine/unexplored)
+"t" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/mine/unexplored)
+"u" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/airless,/area/mine/unexplored)
+
+(1,1,1) = {"
+abbbbbbbbbbaaaaa
+abbbbcbbbbbddaaa
+abbeefgggbbdddaa
+abbehhhhebbiiidd
+abbjaaaaebbiiidd
+dbbjaaaakbbdddaa
+dbblaaamkbbdaaaa
+dbbnaaaopbbdaaaa
+dbbnqraspbbaaaaa
+dbbnsaahpbbaaaaa
+dbbnaaaapbbaaaaa
+abbbtuutbbbaaaaa
+abbbbshbbbbaaaaa
+aadbbhhbbdaaaaaa
+addbtuutbdaaaaaa
+addaahhbbddaaaaa
+"}

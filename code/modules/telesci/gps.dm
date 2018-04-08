@@ -14,12 +14,17 @@ var/global/list/gps_by_type = list()
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
+	var/random = 0
+	var/block_cord = 0
 
 /obj/item/device/gps/Initialize()
 	. = ..()
 	GPS_list += src
-	LAZYADD(gps_by_type["[type]"], src)
-	gpstag = "[gps_prefix][LAZYLEN(gps_by_type["[type]"])]"
+	if(random)
+		gpstag = uppertext(copytext(sanitize(pick(last_names)), 1, 5))
+	else
+		LAZYADD(gps_by_type["[type]"], src)
+		gpstag = "[gps_prefix][LAZYLEN(gps_by_type["[type]"])]"
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
 
@@ -59,8 +64,13 @@ var/global/list/gps_by_type = list()
 			var/tracked_gpstag = G.gpstag
 			if(G.emped == 1 || !pos)
 				t += "<BR>[tracked_gpstag]: ERROR"
+			else if(block_cord == 1)
+				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] (???, [pos.y], [pos.z])"
+			else if(block_cord == 2)
+				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], ???, [pos.z])"
 			else
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
+
 
 	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
 	popup.set_content(t)
@@ -92,3 +102,12 @@ var/global/list/gps_by_type = list()
 	gps_prefix = "MIN"
 	gpstag = "MIN0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/strange
+	icon_state = "gps-x"
+	random = 1
+	desc = "A GPS, clearly, but there is something strange about this one...."
+
+/obj/item/device/gps/strange/Initialize()
+	. = ..()
+	block_cord = rand(1,2)

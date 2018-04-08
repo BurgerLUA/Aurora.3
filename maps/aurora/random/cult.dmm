@@ -1,0 +1,37 @@
+"a" = (/turf/simulated/floor/asteroid/ash,/area/mine/unexplored)
+"b" = (/turf/simulated/mineral/random/high_chance,/area/mine/unexplored)
+"c" = (/turf/simulated/open/airless,/area/mine/unexplored)
+"d" = (/turf/simulated/wall/cult,/area/mine/unexplored)
+"e" = (/turf/simulated/floor/cult,/area/mine/unexplored)
+"f" = (/obj/structure/cult/pylon,/turf/simulated/floor/cult,/area/mine/unexplored)
+"g" = (/obj/structure/cult/forge,/turf/simulated/floor/cult,/area/mine/unexplored)
+"h" = (/obj/effect/decal/remains/human,/turf/simulated/floor/cult,/area/mine/unexplored)
+"i" = (/obj/item/weapon/paper/talisman/supply,/turf/simulated/floor/cult,/area/mine/unexplored)
+"j" = (/mob/living/simple_animal/hostile/faithless/cult,/turf/simulated/floor/cult,/area/mine/unexplored)
+"k" = (/obj/effect/decal/remains/xeno,/turf/simulated/floor/cult,/area/mine/unexplored)
+"l" = (/obj/item/clothing/suit/cultrobes,/obj/item/clothing/head/culthood,/obj/item/clothing/shoes/cult,/obj/effect/decal/remains/human,/turf/simulated/floor/cult,/area/mine/unexplored)
+"m" = (/obj/structure/cult/tome,/turf/simulated/floor/cult,/area/mine/unexplored)
+"n" = (/obj/structure/constructshell/cult,/turf/simulated/floor/cult,/area/mine/unexplored)
+"o" = (/obj/item/clothing/head/helmet/space/cult,/obj/item/clothing/shoes/cult,/obj/item/clothing/suit/space/cult,/obj/item/weapon/melee/cultblade,/obj/item/weapon/storage/backpack/cultpack,/obj/effect/decal/remains/human,/turf/simulated/floor/cult,/area/mine/unexplored)
+"p" = (/obj/structure/cult/pylon/turret/empowered,/turf/simulated/floor/cult,/area/mine/unexplored)
+"q" = (/obj/item/device/gps/strange,/turf/simulated/floor/cult,/area/mine/unexplored)
+"r" = (/obj/structure/cult/talisman,/turf/simulated/floor/cult,/area/mine/unexplored)
+
+(1,1,1) = {"
+aabbbbbbbbaaaaaa
+abbccbbbbbbbacca
+bbccddddcbbcccca
+bddddefdccbbcaaa
+bdgeheedddbbbbaa
+cddeijeeedddcbba
+ccdkeeehlemdccbb
+bcdfneoeipeddcbb
+bbdeeeeqejefddbb
+bbdepjekeeeeedbb
+bbdeeeieeneihddb
+bbdddddheepeeddb
+bbbbbbdfeeeeddbb
+abbccbdddrdddbbb
+aabbccbbdddbbbba
+aaabbbbbcccbbbaa
+"}
