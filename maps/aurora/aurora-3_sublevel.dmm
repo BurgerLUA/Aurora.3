@@ -5741,6 +5741,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/firealarm/north,
+/obj/machinery/computer/aiupload,
 /turf/simulated/floor/tiled/dark{
 	name = "cooled dark floor";
 	temperature = 278
@@ -8600,7 +8601,8 @@
 	},
 /area/turret_protected/ai)
 "pv" = (
-/obj/machinery/computer/aiupload,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/tiled/dark{
 	name = "cooled dark floor";
 	temperature = 278
@@ -8614,6 +8616,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
+/obj/machinery/computer/borgupload,
 /turf/simulated/floor/tiled/dark{
 	name = "cooled dark floor";
 	temperature = 278
@@ -8809,13 +8812,6 @@
 	},
 /turf/simulated/floor/tiled/dark,
 /area/tcommsat/mainlvl_tcomms__relay)
-"pS" = (
-/obj/machinery/computer/borgupload,
-/turf/simulated/floor/tiled/dark{
-	name = "cooled dark floor";
-	temperature = 278
-	},
-/area/turret_protected/ai)
 "pT" = (
 /obj/item/modular_computer/console/preset/ai,
 /turf/simulated/floor/tiled/dark{
@@ -27141,13 +27137,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/tiled/dark{
-	name = "cooled dark floor";
-	temperature = 278
-	},
-/area/turret_protected/ai)
-"VT" = (
-/obj/machinery/computer/robotics,
 /turf/simulated/floor/tiled/dark{
 	name = "cooled dark floor";
 	temperature = 278
@@ -77447,7 +77436,7 @@ ld
 ld
 ld
 ld
-lF
+pT
 lV
 mw
 mQ
@@ -77455,7 +77444,7 @@ np
 nQ
 lE
 oR
-lE
+pv
 ld
 ld
 ld
@@ -78476,13 +78465,13 @@ ld
 ld
 ld
 ld
-pv
-pT
+lF
+lF
 mS
 nt
 nT
-VT
-pS
+lF
+lF
 ld
 ld
 ld
