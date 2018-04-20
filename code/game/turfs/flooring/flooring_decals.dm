@@ -427,3 +427,18 @@
 
 /obj/effect/floor_decal/sign/c2
 	icon_state = "white_c2"
+
+/obj/effect/floor_decal/sign/srg
+	icon_state = "white_srg"
+
+/obj/effect/floor_decal/sign/ea
+	icon_state = "white_ea"
+
+/obj/effect/floor_decal/sign/eb
+	icon_state = "white_eb"
+
+/obj/effect/floor_decal/sign/ec
+	icon_state = "white_ec"
+
+/obj/effect/floor_decal/sign/ed
+	icon_state = "white_ed"
