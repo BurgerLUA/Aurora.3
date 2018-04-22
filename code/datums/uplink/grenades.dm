@@ -3,7 +3,7 @@
 ************/
 /datum/uplink_item/item/grenades
 	category = /datum/uplink_category/grenades
-	
+
 /datum/uplink_item/item/grenades/manhack
 	name = "Manhack Delivery Grenade"
 	item_cost = 3
@@ -23,9 +23,10 @@
 	name = "5xEMP Grenades"
 	item_cost = 6
 	path = /obj/item/weapon/storage/box/emps
-	
+
 /datum/uplink_item/item/grenades/frag
 	name = "5xFrag Grenades"
 	item_cost = 12
 	path = /obj/item/weapon/storage/box/frags
+	antag_roles_blacklist = list(MODE_NINJA)
 

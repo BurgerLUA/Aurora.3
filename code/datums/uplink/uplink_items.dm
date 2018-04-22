@@ -29,9 +29,11 @@ var/datum/uplink/uplink
 	var/name
 	var/desc
 	var/item_cost = 0
-	var/datum/uplink_category/category		// Item category
-	var/list/datum/antagonist/antag_roles	// Antag roles this item is displayed to. If empty, display to all.
-	var/list/datum/antagonist/antag_job     // Antag job this item is displayed to, if empty, display to all.
+	var/datum/uplink_category/category				// Item category
+	var/list/datum/antagonist/antag_roles			// Antag roles this item is displayed to. If empty, display to all.
+	var/list/datum/antagonist/antag_roles_blacklist // Antag roles this item is NOT displayed to. If empty, display to all.
+	var/list/datum/antagonist/antag_job     		// Antag job this item is displayed to, if empty, display to all.
+	var/list/datum/antagonist/antag_roles_discount 	//If you are in this roll, items are half priced.
 
 /datum/uplink_item/item
 	var/path = null
@@ -39,6 +41,8 @@ var/datum/uplink/uplink
 /datum/uplink_item/New()
 	..()
 	antag_roles = list()
+	antag_roles_blacklist = list()
+	antag_roles_discount = list()
 
 /datum/uplink_item/proc/buy(var/obj/item/device/uplink/U, var/mob/user)
 	var/extra_args = extra_args(user)
@@ -51,7 +55,7 @@ var/datum/uplink/uplink
 	if(U.CanUseTopic(user, inventory_state) != STATUS_INTERACTIVE)
 		return
 
-	var/cost = cost(U.uses)
+	var/cost = cost(U.uses,U)
 
 	var/goods = get_goods(U, get_turf(user), user, extra_args)
 	if(!goods)
@@ -67,30 +71,71 @@ var/datum/uplink/uplink
 	return 1
 
 /datum/uplink_item/proc/can_buy(obj/item/device/uplink/U)
-	if(cost(U.uses) > U.uses)
+	if(cost(U.uses,U) > U.uses)
 		return 0
 
 	return can_view(U)
 
-/datum/uplink_item/proc/can_view(obj/item/device/uplink/U)
-	// Making the assumption that if no uplink was supplied, then we don't care about antag roles
-	if(!U || (!antag_roles.len && !antag_job))
-		return 1
-
-	// With no owner, there's no need to check antag status.
-	if(!U.uplink_owner)
-		return 0
-
-	for(var/antag_role in antag_roles)
+/datum/uplink_item/proc/is_in_role(obj/item/device/uplink/U,var/list/datum/antagonist/R)
+	for(var/antag_role in R)
 		var/datum/antagonist/antag = all_antag_types[antag_role]
 		if(antag.is_antagonist(U.uplink_owner))
 			return 1
 
-	if (antag_job == U.uplink_owner.assigned_role) //for a quick and easy list of the assigned_role, look in specialty.dm
+/datum/uplink_item/proc/is_whitelisted_role(obj/item/device/uplink/U)
+
+	if(!LAZYLEN(antag_roles))
 		return 1
+
+	if(!U || !U.uplink_owner)
+		return 0
+
+	if(is_in_role(U,antag_roles))
+		return 1
+
 	return 0
 
-/datum/uplink_item/proc/cost(var/telecrystals)
+/datum/uplink_item/proc/is_blacklisted_role(obj/item/device/uplink/U)
+
+	if(!LAZYLEN(antag_roles_blacklist))
+		return 0
+
+	if(!U || !U.uplink_owner)
+		return 0
+
+	if(is_in_role(U,antag_roles_blacklist))
+		return 1
+
+	return 0
+
+/datum/uplink_item/proc/is_right_job(obj/item/device/uplink/U)
+
+	if(!antag_job)
+		return 1
+
+	if(!U || !U.uplink_owner)
+		return 0
+
+	if(antag_job == U.uplink_owner.assigned_role)
+		return 1
+
+	return 0
+
+/datum/uplink_item/proc/can_view(obj/item/device/uplink/U)
+
+	if(is_right_job(U) && is_whitelisted_role(U) && !is_blacklisted_role(U))
+		return 1
+
+	return 0
+
+/datum/uplink_item/proc/cost(var/telecrystals,obj/item/device/uplink/U)
+
+	if(!LAZYLEN(antag_roles_discount))
+		return item_cost
+
+	if(is_in_role(U,antag_roles_discount))
+		return Ceiling(item_cost * 0.5)
+
 	return item_cost
 
 /datum/uplink_item/proc/description()
@@ -166,6 +211,6 @@ var/datum/uplink/uplink
 		if(!I)
 			break
 		bought_items += I
-		remaining_TC -= I.cost(remaining_TC)
+		remaining_TC -= I.cost(remaining_TC,U)
 
 	return bought_items
