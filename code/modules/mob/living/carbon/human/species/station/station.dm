@@ -318,6 +318,9 @@
 	appearance_flags = 0
 	spawn_flags = CAN_JOIN | IS_WHITELISTED
 
+	gluttonous = TRUE
+	allowed_eat_types = TYPE_ORGANIC | TYPE_HUMANOID
+
 	blood_color = "#97dd7c"
 	flesh_color = "#907E4A"
 

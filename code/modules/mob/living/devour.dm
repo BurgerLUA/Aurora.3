@@ -1,40 +1,22 @@
-//This file contains variables and helper functions for mobs that can eat other mobs
-
-//There are two ways to eat a mob:
-	//Swallowing whole can only be done if the mob is sufficiently small
-		//It will place the mob inside you, and slowly digest it,
-			//Digesting deals brute+fire damage to the victim and adds protein to your stomach based on the damage dealt.
-			//Mob will be deleted from your contents when fully digested.
-				//Mob is fully digested when it has taken fire+brute damage equal to its max health plus 50% (calculated after death)
-
-	//Devouring eats the mob piece by piece. Taking a bite periodically
-		//Each bite deals genetic damage, and drains blood.
-			//Adds protein to your stomach based on quantities.
-		//Mob is fully digested when it has taken genetic damage equal to its max health.  This continues past death if necessary
-		//Devouring is interrupted if you or the mob move away from each other, or if the eater gets disabled.
-
 #define PPM 9	//Protein per meat, used for calculating the quantity of protein in an animal
+#define MAX_DEVOUR_HEALTH 300 //Can't devour anyone with damage greater than this.
 
 /mob/living
 	var/mob/living/devouring	// The mob we're currently eating, if any.
 
 /mob/living/proc/attempt_devour(var/mob/living/victim, var/eat_types, var/mouth_size = null)
 
-	//This function will attempt to eat the victim,
-	//either by swallowing them if they're small enough, or starting to devour them otherwise
-		//If a mouth_size is passed in, it will be used instead of this mob's size, for determining whether the victim is small enough to swallow
-	//This function is the main gateway to devouring, and will have all the safety checks
 	if (!victim)
 		return 0
 
 	face_atom(victim)
 
 	if (victim == src)
-		src << "<span class='warning'>You can't eat yourself!</span>"
+		src.show_message("<span class='warning'>You can't eat yourself!</span>")
 		return 0
 
 	if (devouring == victim)
-		src << span("notice","You stop eating [victim].")
+		src.show_message("<span class='notice'>You stop eating [victim].</span>")
 		devouring = null
 		return
 
@@ -42,26 +24,27 @@
 		var/mob/living/carbon/human/H = src
 		var/obj/item/blocked = H.check_mouth_coverage()
 		if(blocked)
-			user << "<span class='warning'>\The [blocked] is in the way!</span>"
+			src.show_message("<span class='warning'>\The [blocked] is in the way!</span>")
 			return
 
-	//This check is exploit prevention.
-	//Nymphs have seperate mechanics for gaining biomass from other diona
-	//This check prevents the exploit of almost-devouring a nymph, and then absorbing it to gain double biomass
 	if (victim.is_diona() && src.is_diona())
-		src << "<span class='warning'>You can't eat other diona!</span>"
+		src.show_message("<span class='warning'>You can't eat other diona this way!</span>")
 		return 0
 
 	if (!src.Adjacent(victim))
-		src << "<span class='warning'>That creature is too far away, move closer!</span>"
+		src.show_message("<span class='warning'>You're too far away from \the [victim]!</span>")
 		return 0
 
 	if (!is_valid_for_devour(victim, eat_types))
-		src << "<span class='warning'>You can't eat that type of creature!</span>"
+		src.show_message("<span class='warning'>You can't eat that type of creature!</span>")
+		return 0
+
+	if((victim.getBruteLoss()/victim.getMaxHealth()) * 100 > MAX_DEVOUR_HEALTH)
+		src.show_message("<span class='warning'>There is nothing more to eat!</span>")
 		return 0
 
 	if (!victim.mob_size || !src.mob_size)
-		src << "<span class='danger'>Error, no mob size defined for [victim.type]! You have encountered a bug, report it on github </span>"
+		src.show_message("<span class='danger'>Error, no mob size defined for [victim.type]! You have encountered a bug, report it on github </span>")
 		return 0
 
 	if (!mouth_size)
@@ -77,85 +60,86 @@
 	//This function will move the victim inside the eater's contents.. There they will be digested over time
 
 	var/swallow_time = max(3 + (victim.mob_size * victim.mob_size) - mouth_size, 3)
-	src.visible_message("[src] starts swallowing \the [victim]!","You start swallowing \the [victim], this will take approximately [swallow_time] seconds.")
+	src.visible_message("<span class='warning'>[src] starts swallowing \the [victim]!</span>","<span class='warning'>You start swallowing \the [victim]...</span>")
 	var/turf/ourloc = src.loc
 	var/turf/victimloc = victim.loc
 	devouring = victim
-	if (do_mob(src, victim, swallow_time*10, extra_checks = CALLBACK(src, .proc/devouring_equals, victim)))
+	if (do_mob(src, victim, swallow_time SECONDS, extra_checks = CALLBACK(src, .proc/devouring_equals, victim)))
 		victim.forceMove(src)
 		LAZYADD(stomach_contents, victim)
 	else if (victimloc != victim.loc)
-		src << "[victim] moved away, you need to keep it still. Try grabbing, stunning or killing it first."
+		src.show_message("<span class='warning'>You're too far away from \the [victim]!</span>")
 	else if (ourloc != src.loc)
-		src << "You moved! Can't eat if you move away from the victim"
+		src.show_message("<span class='warning'>You must be still to eat \the [victim]!</span>")
 	else if (devouring)
-		src << "Swallowing failed!"//reason unknown, maybe the eater got stunned?
+		src.show_message("<span class='warning'>You failed to devour \the [victim]!</span>")
 
 	devouring = null
 
 /mob/living/proc/devour_gradual(var/mob/living/victim, var/mouth_size)
 	set waitfor = FALSE
-	//This function will start consuming the victim by taking bites out of them.
-	//Victim or attacker moving will interrupt it
-	//A bite will be taken every 4 seconds
+
 	devouring = victim
-	var/bite_delay = 4
-	var/bite_size = mouth_size * 0.5
-	var/num_bites_needed = (victim.mob_size*victim.mob_size)/bite_size//total bites needed to eat it from full health
-	var/PEPB = 1/num_bites_needed//Percentage eaten per bite
+	var/bite_delay = 2 // In seconds
+	var/bite_damage = mouth_size * bite_delay
 	var/turf/ourloc = src.loc
 	var/turf/victimloc = victim.loc
-	var/messes = 0//number of bloodstains we've placed
-	var/datum/reagents/vessel = victim.get_vessel(1)
-	if(!victim.composition_reagent_quantity)
-		victim.calculate_composition()
 
-	var/victim_maxhealth = victim.maxHealth//We cache this here incase we need to edit it, for example, for humans and anything else that doesn't die until negative health
+	//var/mob/living/carbon/human/victim_human = victim
+	//var/mob/living/carbon/human/self_human = src
 
-	//Now, incase we're resuming an earlier feeding session on the same creature
-	//We calculate the actual bites needed to fully eat it based on how eaten it already is
-	if (victim.cloneloss)
-		var/percentageDamaged = victim.cloneloss / victim_maxhealth
-		var/percentageRemaining = 1 - percentageDamaged
-		num_bites_needed = percentageRemaining / PEPB
+	src.visible_message("<span class='danger'>\The [src] starts devouring \the [victim]!</span>","<span class='danger'>You start devouring \the [victim]!</span>")
 
-	var/time_needed_seconds = num_bites_needed*bite_delay//in seconds for now
-	var/time_needed_minutes
-	var/time_needed_string
-	if (time_needed_seconds > 60)
-		time_needed_minutes = round((time_needed_seconds/60))
-		time_needed_seconds = time_needed_seconds % 60
-		time_needed_string = "[time_needed_minutes] minutes and [time_needed_seconds] seconds"
-	else
-		time_needed_string = "[time_needed_seconds] seconds"
+	while(TRUE)
+		if(do_mob(src, victim, bite_delay SECONDS, extra_checks = CALLBACK(src, .proc/devouring_equals, victim)))
 
+			if(!victim.composition_reagent_quantity)
+				victim.calculate_composition()
 
-	src.visible_message("<span class='danger'>[src] starts devouring [victim]</span>","<span class='danger'>You start devouring [victim], this will take approximately [time_needed_string]. You and the victim must remain still to continue, but you can interrupt feeding anytime and leave with what you've already eaten.</span>")
-
-	for (var/i = 0 to num_bites_needed)
-		if(do_mob(src, victim, bite_delay*10, extra_checks = CALLBACK(src, .proc/devouring_equals, victim)))
 			face_atom(victim)
-			victim.apply_damage(victim_maxhealth*PEPB,HALLOSS)
-			victim.apply_damage(victim_maxhealth*PEPB*5,CLONE)
-			ingested.add_reagent(victim.composition_reagent, victim.composition_reagent_quantity*PEPB)
-			visible_message("<span class='danger'>[src] bites a chunk out of [victim]</span>","<span class='danger'>[bitemessage(victim)]</span>")
-			if (messes < victim.mob_size - 1 && prob(50))
-				handle_devour_mess(src, victim, vessel)
-			if (victim.cloneloss >= victim_maxhealth)
-				visible_message("[src] finishes devouring [victim].","You finish devouring [victim].")
-				handle_devour_mess(src, victim, vessel, 1)
-				qdel(victim)
+
+			//Add blood
+			add_blood(victim)
+
+			var/turf/simulated/location01 = get_turf(victim)
+			if(istype(location01))
+				location01.add_blood(victim)
+
+			var/turf/simulated/location02 = get_turf(src)
+			if(istype(location02))
+				location02.add_blood(victim)
+
+			//Health effects
+			var/health_scale  = (victim.getBruteLoss()/victim.getMaxHealth()) * 100
+			switch(health_scale)
+				if(25 to 50)
+					bite_damage *= 2
+				if(50 to 100)
+					bite_damage *= 3
+				if(100 to 150)
+					bite_damage *= 4
+				if(150 to 200)
+					bite_damage *= 5
+				if(200 to INFINITY)
+					bite_damage *= 10
+
+			victim.apply_damage(bite_damage,BRUTE)
+			ingested.add_reagent(victim.composition_reagent, bite_damage * 0.5)
+			visible_message("<span class='danger'>[src] bites a chunk out of \the [victim]!</span>","<span class='danger'>[bitemessage(victim)]!</span>")
+
+			if (health_scale > 300)
+				src.visible_message("<span class='danger'>\The [src] finishes devouring \the [victim]!</span>","<span class='notice'>You finish devouring \the [victim].</span>")
 				devouring = null
 				break
+
 		else
 			devouring = null
 			if (victim && victimloc != victim.loc)
-				src << "<span class='danger'>[victim] moved away, you need to keep it still. Try grabbing, stunning or killing it first.</span>"
+				src.show_message("<span class='warning'>You're too far away from \the [victim]!</span>")
 			else if (ourloc != src.loc)
-				src << "<span class='danger'>You moved! Devouring cancelled.</span>"
+				src.show_message("<span class='warning'>You must be still to eat \the [victim]!</span>")
 			else
-				src << "Devouring Cancelled."//reason unknown, maybe the eater got stunned?
-				//This can also happen if you start devouring something else
+				src.show_message("<span class='warning'>You failed to devour \the [victim]!</span>")
 			break
 
 /mob/living/proc/devouring_equals(target)
@@ -184,63 +168,23 @@
 			ingested.add_reagent(M.composition_reagent, M.composition_reagent_quantity * dmg_factor)
 
 			if (M.stat == DEAD && !stomach_contents[M])	// If the mob has died, poke the consuming mob about it.
-				src << "Your stomach feels a little more relaxed as \the [M] finally stops fighting."
 				stomach_contents[M] = TRUE	// So the message doesn't play more than once.
 				continue
 
 			var/damage_dealt = (M.getFireLoss() * 0.66) + (M.getBruteLoss() * 0.33)
 			if (stomach_contents[M] && (damage_dealt >= M.maxHealth * 1.5))	//If we've consumed all of it (plus a bit), then digestion is finished.
 				LAZYREMOVE(stomach_contents, M)
-				src << "Your stomach feels a little more empty as you finish digesting \the [M]."
 				qdel(M)
 
 //Helpers
 /proc/bitemessage(var/mob/living/victim)
 	return pick(
-		"You take a bite out of \the [victim].",
-		"You rip a chunk off of \the [victim].",
-		"You consume a piece of \the [victim].",
-		"You feast upon your prey.",
-		"You chow down on \the [victim].",
-		"You gobble \the [victim]'s flesh.")
-
-/proc/handle_devour_mess(var/mob/user, var/mob/living/victim, var/datum/reagents/vessel, var/finish = 0)
-	//The maximum number of blood placements is equal to the mob size of the victim
-	//We will use one blood placement on each of the following, in this order
-		//Bloodying the victim's tile
-		//Bloodying the attacker, if possible
-		//Bloodying the attacker's tile
-	//After that, we will allocate the remaining blood placements to random tiles around the victim and attacker, until either all are used or victim is dead
-	var/datum/reagent/blood/B = vessel.get_master_reagent()
-
-	if (!turf_hasblood(get_turf(victim)))
-		devour_add_blood(victim, get_turf(victim), vessel)
-		return 1
-
-	else if (istype(user, /mob/living/carbon/human) && !user.blood_DNA)
-		//if this blood isn't already in the list, add it
-		user.blood_DNA = list(B.data["blood_DNA"])
-		user.blood_color = B.data["blood_color"]
-		user.update_inv_gloves()	//handles bloody hands overlays and updating
-		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
-		return 1
-
-	else if (!turf_hasblood(get_turf(user)))
-		devour_add_blood(victim, get_turf(user), vessel)
-		return 1
-
-	if (finish)
-		//A bigger victim makes more gibs
-		if (victim.mob_size >= 3)
-			new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
-		if (victim.mob_size >= 5)
-			new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
-		if (victim.mob_size >= 7)
-			new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
-		if (victim.mob_size >= 9)
-			new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
-		return 1
-	return 0
+		"You take a bite out of \the [victim]",
+		"You rip a chunk off of \the [victim]",
+		"You consume a piece of \the [victim]",
+		"You feast upon your prey",
+		"You chow down on \the [victim]",
+		"You gobble \the [victim]'s flesh")
 
 /proc/devour_add_blood(var/mob/living/M, var/turf/location, var/datum/reagents/vessel)
 	for(var/datum/reagent/blood/source in vessel.reagent_list)
@@ -297,3 +241,4 @@
 		src.composition_reagent_quantity = size_reagent
 
 #undef PPM
+#undef MAX_DEVOUR_HEALTH

@@ -58,6 +58,7 @@
 	overdose = REAGENTS_OVERDOSE * 0.5
 	color_weight = 20
 	taste_description = "chalk"
+	unaffected_species = 0
 
 /datum/reagent/paint/touch_turf(var/turf/T)
 	if(istype(T) && !istype(T, /turf/space))
@@ -132,6 +133,7 @@
 	glass_icon_state = "golden_cup"
 	glass_name = "golden cup"
 	glass_desc = "It's magic. We don't have to explain it."
+	unaffected_species = 0
 
 /datum/reagent/adminordrazine/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
 	affect_blood(M, alien, removed)
@@ -188,6 +190,7 @@
 	reagent_state = SOLID
 	color = "#B8B8C0"
 	taste_description = "the inside of a reactor"
+	unaffected_species = IS_MACHINE
 
 /datum/reagent/uranium/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
 	affect_ingest(M, alien, removed)
@@ -233,6 +236,7 @@
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
+	unaffected_species = IS_MACHINE
 
 /datum/reagent/water/holywater/affect_ingest(var/mob/living/carbon/M, var/alien, var/removed)
 	..()
@@ -288,6 +292,7 @@
 	color = "#673910"
 	touch_met = 50
 	taste_description = "sweet tasting metal"
+	unaffected_species = 0
 
 /datum/reagent/thermite/touch_turf(var/turf/T)
 	if(volume >= 5)
@@ -375,6 +380,7 @@
 	reagent_state = LIQUID
 	color = "#EEEEEE"
 	taste_description = "cherry"
+	unaffected_species = IS_MACHINE
 
 /datum/reagent/toxin/cardox/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
 	.. ()
@@ -384,7 +390,7 @@
 /datum/reagent/cardox/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(alien == IS_VAURCA)
 		M.adjustToxLoss(removed * 5)
-	else
+	else if(alien != IS_DIONA)
 		M.adjustToxLoss(removed * 2)
 
 /datum/reagent/cardox/touch_turf(var/turf/T)
@@ -454,6 +460,7 @@
 	reagent_state = LIQUID
 	color = "#F2F3F4"
 	taste_description = "metal"
+	unaffected_species = 0
 
 /datum/reagent/luminol/touch_obj(var/obj/O)
 	O.reveal_blood()
@@ -470,6 +477,7 @@
 	scannable = 1
 	metabolism = REM * 0.25
 	taste_description = "bottled fire"
+	unaffected_species = 0
 	var/datum/modifier/modifier
 
 /datum/reagent/estus/affect_blood(var/mob/living/carbon/M, var/removed)
@@ -498,6 +506,7 @@
 	color = "#E25822"
 	touch_met = 5
 	taste_description = "metal"
+	unaffected_species = 0
 
 /datum/reagent/liquid_fire/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(istype(M))
@@ -538,6 +547,7 @@
 	description = "A dust composed of microscopic bluespace crystals."
 	color = "#1f8999"
 	taste_description = "fizzling blue"
+	unaffected_species = 0
 
 /datum/reagent/bluespace_dust/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(prob(25))

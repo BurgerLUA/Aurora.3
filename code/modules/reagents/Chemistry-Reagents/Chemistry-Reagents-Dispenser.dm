@@ -303,6 +303,7 @@
 	reagent_state = SOLID
 	color = "#C7C7C7"
 	taste_description = "the color blue, and regret"
+	unaffected_species = IS_MACHINE
 
 /datum/reagent/radium/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	M.apply_effect(10 * removed, IRRADIATE, blocked = 0) // Radium may increase your chances to cure a disease

@@ -1,0 +1,8 @@
+author: BurgerBB
+
+delete-after: True
+
+changes: 
+  - tweak: "Bluespace Dust, Liquid Fire, Liquid Light, Thermite, and Adminordrazine can affect machines and Dionaea. Cardox, Holy Water, Uranium, and Radium can affect Dionaea."
+  - rscadd: "Dionaea Gestalts can now devour humanoids. Human devouring isn't instant, but takes several minutes to perform."
+  - rscdel: "Devouring small creatures is now less fucking creepy by removing overly in-depth 'stomach squirming' information."
