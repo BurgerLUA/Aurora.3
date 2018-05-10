@@ -1436,6 +1436,7 @@
 #include "code\modules\item_worth\Value_procs\obj\structures.dm"
 #include "code\modules\law\incident.dm"
 #include "code\modules\law\law.dm"
+#include "code\modules\law\mining.dm"
 #include "code\modules\law\laws\high_severity.dm"
 #include "code\modules\law\laws\low_severity.dm"
 #include "code\modules\law\laws\med_severity.dm"

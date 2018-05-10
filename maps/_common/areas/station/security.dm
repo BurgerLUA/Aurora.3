@@ -32,6 +32,10 @@
 	name = "\improper Security - Prison Wing"
 	icon_state = "sec_prison"
 
+/area/security/prison/secure
+	name = "\improper Security - Solitary Prison Wing"
+	icon_state = "sec_prison"
+
 /area/security/prison/prison_break()
 	for(var/obj/structure/closet/secure_closet/brig/temp_closet in src)
 		temp_closet.locked = 0
@@ -59,6 +63,10 @@
 
 /area/security/investigations
 	name = "\improper Security - Investigations Division"
+	icon_state = "detective"
+
+/area/security/mines
+	name = "\improper Security - Mines"
 	icon_state = "detective"
 
 /area/security/training
