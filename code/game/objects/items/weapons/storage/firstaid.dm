@@ -253,6 +253,22 @@
     new /obj/item/weapon/reagent_containers/pill/dylovene(src)
     new /obj/item/weapon/reagent_containers/pill/dylovene(src)
 
+/obj/item/weapon/storage/pill_bottle/dylovene_consumer
+	name = "bottle of Dylovene pills"
+	desc = "Contains pills used to treat toxic substances in the blood."
+
+/obj/item/weapon/storage/pill_bottle/dylovene_consumer/fill()
+    ..()
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+    new /obj/item/weapon/reagent_containers/pill/dylovene_consumer(src)
+
+
+
 /obj/item/weapon/storage/pill_bottle/inaprovaline
 	name = "bottle of Inaprovaline pills"
 	desc = "Contains pills used to stabilize patients."
@@ -294,6 +310,20 @@
     new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
     new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
     new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+
+/obj/item/weapon/storage/pill_bottle/paracetamol
+	name = "bottle of Paracetamol pills"
+	desc = "Contains pills used to relieve pain."
+
+	fill()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
+		new /obj/item/weapon/reagent_containers/pill/paracetamol( src )
 
 /obj/item/weapon/storage/pill_bottle/tramadol
 	name = "bottle of Tramadol pills"

@@ -136,7 +136,7 @@
 	icon_state = "pill8"
 	Initialize()
 		. = ..()
-		reagents.add_reagent("paracetamol", 15)
+		reagents.add_reagent("paracetamol", 10)
 
 /obj/item/weapon/reagent_containers/pill/tramadol
 	name = "Tramadol pill"
@@ -162,7 +162,7 @@
 	Initialize()
 		. = ..()
 		reagents.add_reagent("escitalopram", 15)
-	
+
 /obj/item/weapon/reagent_containers/pill/escitalopram
 	name = "Escitalopram pill"
 	desc = "Mild anti-depressant."
@@ -170,7 +170,7 @@
 	Initialize()
 		. = ..()
 		reagents.add_reagent("escitalopram", 15)
-		
+
 /obj/item/weapon/reagent_containers/pill/hextrasenil
 	name = "Hextrasenil pill"
 	desc = "Don't forget to take your pills."
@@ -178,7 +178,7 @@
 	Initialize()
 		. = ..()
 		reagents.add_reagent("hextrasenil", 30)
-		
+
 /obj/item/weapon/reagent_containers/pill/trisyndicotin
 	name = "Trisyndicotin pill"
 	desc = "For when you need a little convincing."
@@ -226,6 +226,14 @@
 	Initialize()
 		. = ..()
 		reagents.add_reagent("anti_toxin", 15)
+
+/obj/item/weapon/reagent_containers/pill/dylovene_consumer
+	name = "Dylovene pill"
+	desc = "A broad-spectrum anti-toxin."
+	icon_state = "pill13"
+	Initialize()
+		. = ..()
+		reagents.add_reagent("anti_toxin", 5)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"

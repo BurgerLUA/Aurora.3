@@ -11741,13 +11741,13 @@
 /turf/simulated/floor/tiled,
 /area/crew_quarters/locker)
 "vF" = (
-/obj/machinery/vending/snack,
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/lapvend,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/locker)
 "vG" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/floor_decal/industrial/hatch/yellow,
+/obj/machinery/vending/pubmed,
 /turf/simulated/floor/tiled,
 /area/crew_quarters/locker)
 "vH" = (

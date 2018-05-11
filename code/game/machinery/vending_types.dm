@@ -744,3 +744,29 @@
 		/obj/item/weapon/vending_refill/robo = 1
 
 	)
+
+//Pubmed
+/obj/machinery/vending/pubmed
+	name = "NanoMed Public"
+	desc = "A public access NanoMed vending machine selling a robust array of medical and hygiene products."
+	icon_state = "pubmed"
+	vend_id = "pubmed"
+	products = list(
+		/obj/item/stack/medical/bruise_pack = 10,
+		/obj/item/stack/medical/ointment = 8,
+		/obj/item/weapon/storage/pill_bottle/paracetamol = 6,
+		/obj/item/weapon/storage/pill_bottle/dylovene_consumer = 2,
+		/obj/item/weapon/soap/nanotrasen = 2,
+		/obj/item/weapon/towel = 6
+	)
+	contraband = list(
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack = 2,
+	)
+	prices = list(
+		/obj/item/weapon/storage/pill_bottle/paracetamol = 120,
+		/obj/item/weapon/storage/pill_bottle/dylovene_consumer = 140,
+		/obj/item/stack/medical/ointment = 30,
+		/obj/item/stack/medical/bruise_pack = 20,
+		/obj/item/weapon/soap/nanotrasen = 20,
+		/obj/item/weapon/towel = 30
+	)
