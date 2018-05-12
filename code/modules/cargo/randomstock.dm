@@ -469,7 +469,7 @@ var/list/global/random_stock_large = list(
 			if (prob(5))
 				new /obj/item/weapon/storage/toolbox/syndicate(L)
 			else
-				new /obj/random/toolbox(L)
+				new /obj/random/tech/toolbox(L)
 
 		if("nanopaste")
 			new /obj/item/stack/nanopaste(L)
@@ -556,7 +556,7 @@ var/list/global/random_stock_large = list(
 					))
 				new type(L)
 		if("aid")
-			new /obj/random/firstaid(L)
+			new /obj/random/medical/firstaid(L)
 		if("flame")
 			new /obj/item/weapon/storage/box/matches(L)
 			new /obj/item/weapon/flame/lighter/random(L)
@@ -564,15 +564,16 @@ var/list/global/random_stock_large = list(
 			new /obj/item/weapon/storage/fancy/candle_box(L)
 
 		if("bombsupply")
-			new /obj/random/bomb_supply(L)
-			new /obj/random/bomb_supply(L)
-			new /obj/random/bomb_supply(L)
-			new /obj/random/bomb_supply(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
+
 		if("tech")
-			new /obj/random/tech_supply(L)
-			new /obj/random/tech_supply(L)
-			new /obj/random/tech_supply(L)
-			new /obj/random/tech_supply(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
+			new /obj/random/tech(L)
 
 		if("smokes")
 			new /obj/item/weapon/flame/lighter/random(L)
@@ -635,6 +636,7 @@ var/list/global/random_stock_large = list(
 			new /obj/random/smalltank(L)
 			new /obj/random/smalltank(L)
 			new /obj/random/smalltank(L)
+
 		if("belts")
 			new /obj/random/belt(L)
 			new /obj/random/belt(L)

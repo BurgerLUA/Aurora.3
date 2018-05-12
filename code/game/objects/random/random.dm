@@ -223,7 +223,7 @@
 
 /obj/random/handgun
 	name = "Random Handgun"
-	desc = "This is a random security sidearm."
+	desc = "This is a random security sidearm. For use in security lockers."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "secgundark"
 	problist = list(
@@ -313,14 +313,11 @@
 
 /obj/random/smalltank
 	name = "random small tank"
-
-/obj/random/smalltank/item_to_spawn()
-	if (prob(40))
-		return /obj/item/weapon/tank/emergency_oxygen
-	else if (prob(60))
-		return /obj/item/weapon/tank/emergency_oxygen/engi
-	else
-		return /obj/item/weapon/tank/emergency_oxygen/double
+	problist = list(
+		/obj/item/weapon/tank/emergency_oxygen = 4,
+		/obj/item/weapon/tank/emergency_oxygen/engi = 2,
+		/obj/item/weapon/tank/emergency_oxygen/double = 1
+	)
 
 /obj/random/belt
 	name = "random belt"
@@ -450,6 +447,7 @@
 		/obj/machinery/vending/phoronresearch = 0.7,
 		/obj/machinery/vending/security = 0.3,
 		/obj/machinery/vending/hydronutrients = 1,
+		/obj/machinery/seed_storage/random = 0.1,
 		/obj/machinery/vending/hydroseeds = 1,
 		/obj/machinery/vending/magivend = 0.5,	//The things it dispenses are just costumes to non-wizards
 		/obj/machinery/vending/dinnerware = 1,
@@ -553,7 +551,7 @@
 	desc = "This is a random melee weapon."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
-	spawnlist = list(
+	problist = list(
 		/obj/item/weapon/melee/telebaton,
 		/obj/item/weapon/melee/energy/sword,
 		/obj/item/weapon/melee/energy/sword/pirate,
@@ -571,6 +569,10 @@
 		/obj/item/weapon/material/twohanded/pike/pitchfork,
 		/obj/item/weapon/melee/whip
 	)
+
+/obj/random/weapon
+
+
 
 /obj/random/coin
 	name = "random coin"
@@ -923,21 +925,30 @@
 	)
 
 /obj/random/sword
-	name = "random sword"
-	desc = "This is a random sword."
+	name = "random primitive weapon"
+	desc = "This is a random primitive weapon."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "claymore"
-	spawnlist = list(
-		/obj/item/weapon/material/sword,
-		/obj/item/weapon/material/sword/katana,
-		/obj/item/weapon/material/sword/rapier,
-		/obj/item/weapon/material/sword/longsword,
-		/obj/item/weapon/material/sword/trench,
-		/obj/item/weapon/material/sword/sabre,
-		/obj/item/weapon/material/sword/axe,
-		/obj/item/weapon/material/sword/khopesh,
-		/obj/item/weapon/material/sword/dao,
-		/obj/item/weapon/material/sword/gladius
+	problist = list(
+		/obj/item/weapon/material/hatchet/tacknife = 8,
+		/obj/item/weapon/material/butterfly = 6,
+		/obj/item/weapon/material/butterfly/switchblade = 4,
+		/obj/item/weapon/material/sword = 4
+		/obj/item/weapon/material/sword/katana = 2,
+		/obj/item/weapon/material/sword/rapier = 1,
+		/obj/item/weapon/material/sword/longsword = 2,
+		/obj/item/weapon/material/sword/trench = 4,
+		/obj/item/weapon/material/sword/sabre = 1,
+		/obj/item/weapon/material/sword/axe = 2,
+		/obj/item/weapon/material/sword/khopesh = 1,
+		/obj/item/weapon/material/sword/dao = 1,
+		/obj/item/weapon/material/sword/gladius = 1,
+		/obj/item/weapon/material/twohanded/zweihander = 0.1,
+		/obj/item/weapon/material/twohanded/spear/steel = 0.1,
+		/obj/item/weapon/material/twohanded/pike = 0.1,
+		/obj/item/weapon/material/twohanded/pike/halberd = 0.1,
+		/obj/item/weapon/material/twohanded/pike/pitchfork = 0.2,
+		/obj/item/weapon/material/scythe = 1
 	)
 
 /obj/random/arcade

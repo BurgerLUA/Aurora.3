@@ -32,7 +32,7 @@
 	var/list/scanner = list() // What properties we can view
 
 /obj/machinery/seed_storage/random // This is mostly for testing, but I guess admins could spawn it
-	name = "Random seed storage"
+	name = "Seed storage"
 	scanner = list("stats", "produce", "soil", "temperature", "light")
 	starting_seeds = list(/obj/item/seeds/random = 50)
 
