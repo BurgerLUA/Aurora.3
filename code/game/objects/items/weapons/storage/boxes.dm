@@ -770,8 +770,8 @@
 	return
 
 /obj/item/weapon/storage/box/autoinjectors
-	name = "box of injectors"
-	desc = "Contains autoinjectors."
+	name = "box of empty injectors"
+	desc = "Contains empty autoinjectors."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/autoinjectors/fill()

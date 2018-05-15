@@ -59,9 +59,28 @@
 	amount_per_transfer_from_this = 5
 	volume = 5
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/Initialize()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline
+	name = "autoinjector (inaprovaline)"
+	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel. This one contains inaprovaline."
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline/Initialize()
 	. =..()
 	reagents.add_reagent("inaprovaline", 5)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/mining
+	name = "autoinjector (survival)"
+	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel. This one contains inaprovaline, bicardine, and dexalin."
+	icon_state = "autoinjector_big"
+	item_state = "autoinjector"
+	volume = 15
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/mining/Initialize()
+	. =..()
+	reagents.add_reagent("inaprovaline", 5)
+	reagents.add_reagent("bicardine", 5)
+	reagents.add_reagent("dexalin", 5)
 	update_icon()
 	return
 

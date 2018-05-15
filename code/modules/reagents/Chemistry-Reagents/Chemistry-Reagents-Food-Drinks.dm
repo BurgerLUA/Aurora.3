@@ -75,6 +75,22 @@
 	nutriment_factor = 10
 	attrition_factor = (REM * 4)/BASE_MAX_NUTRITION // Increases attrition rate.
 
+/datum/reagent/nutriment/omni
+	name = "Omninutriment"
+	id = "omninutriment"
+	description = "Also known as 'Pink Slime', it contains all the vitamins, minerals, and carbs the body needs, for every carbon-based lifeform!"
+	taste_mult = 4
+	reagent_state = SOLID
+	metabolism = REM * 4
+	nutriment_factor = 6 // Per removed in digest.
+	blood_factor = 6
+	regen_factor = 0.8
+	attrition_factor = 0
+	color = "#FF2222"
+
+/datum/reagent/nutriment/omni/affect_ingest(var/mob/living/carbon/M, var/alien, var/removed)
+	digest(M,removed)
+
 /datum/reagent/nutriment/mix_data(var/list/newdata, var/newamount)
 	if(!islist(newdata) || !newdata.len)
 		return

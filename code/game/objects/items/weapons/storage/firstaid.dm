@@ -32,7 +32,7 @@
 		new /obj/item/stack/medical/ointment( src )
 		new /obj/item/stack/medical/ointment( src )
 		new /obj/item/device/healthanalyzer( src )
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline( src )
 		return
 
 
@@ -83,8 +83,8 @@
 		new /obj/item/weapon/reagent_containers/inhaler/dexalin( src )
 		new /obj/item/weapon/reagent_containers/inhaler/dexalin( src )
 		new /obj/item/weapon/reagent_containers/inhaler/dexalin( src )
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/inaprovaline( src )
 		new /obj/item/device/breath_analyzer( src )
 		return
 
@@ -150,19 +150,35 @@
 
 /obj/item/weapon/storage/firstaid/brute
 	name = "brute aid kit"
-	desc = "A NanoTrasen care package for moderately injured miners."
+	desc = "A NanoTrasen care package for the moderately injured."
 	icon_state = "brute"
 
 /obj/item/weapon/storage/firstaid/brute/fill()
-		..()
-		if (empty) return
-		new /obj/item/stack/medical/bruise_pack(src)
-		new /obj/item/stack/medical/bruise_pack(src)
-		new /obj/item/stack/medical/bruise_pack(src)
-		new /obj/item/stack/medical/bruise_pack(src)
-		new /obj/item/stack/medical/advanced/bruise_pack(src)
-		new /obj/item/stack/medical/advanced/bruise_pack(src)
-		return
+	..()
+	if (empty) return
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	return
+
+/obj/item/weapon/storage/firstaid/miner
+	name = "mining aid kit"
+	desc = "A NanoTrasen care kit for moderately injured miners. Contains everything needed to stabilize an injury."
+	icon_state = "medbriefcase"
+	w_class = 2
+	max_w_class = 2
+	max_storage_space = 6
+
+/obj/item/weapon/storage/firstaid/miner/fill()
+	..()
+	if (empty) return
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/mining(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/mining(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/mining(src)
+	return
 
 /*
  * Pill Bottles
