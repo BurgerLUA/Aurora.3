@@ -1,6 +1,6 @@
 //Bees are spawned from an apiary, and will slowly die if it is destroyed.
 
-/mob/living/simple_animal/bee
+/mob/living/simple_animal/hostile/retaliate/bee
 	name = "bees"
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bees1"
@@ -9,23 +9,24 @@
 	unsuitable_atoms_damage = 2.5
 	maxHealth = 20
 	density = 0
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	turns_per_move = 6
+	destroy_surroundings = 0
+	faction = "bees"
+	var/obj/machinery/portable_atmospherics/hydroponics/my_hydrotray
 	var/strength = 1
 	var/feral = 0
 	var/mut = 0
 	var/toxic = 0
 	var/turf/target_turf
-	var/mob/target_mob
 	var/obj/machinery/beehive/parent
 	var/loner = 0
-	pass_flags = PASSTABLE
-	turns_per_move = 6
-	var/obj/machinery/portable_atmospherics/hydroponics/my_hydrotray
 
-/mob/living/simple_animal/bee/Initialize(mapload, var/obj/machinery/beehive/new_parent)
+/mob/living/simple_animal/hostile/retaliate/bee/Initialize(mapload, var/obj/machinery/beehive/new_parent)
 	. = ..()
 	parent = new_parent
 
-/mob/living/simple_animal/bee/Destroy()
+/mob/living/simple_animal/hostile/retaliate/bee/Destroy()
 	if(parent)
 		parent.owned_bee_swarms.Remove(src)
 	my_hydrotray = null
@@ -39,7 +40,7 @@
 //Instead the swarm strength (ie, size, or quantity of bees) drops and their health is refilled
 //Repeat until strength hits zero. only THEN do they die, and they qdel and leave no corpse in doing so
 //Because we don't have sprites for a carpet made of bee corpses.
-/mob/living/simple_animal/bee/death()
+/mob/living/simple_animal/hostile/retaliate/bee/death()
 	if (!QDELING(src))
 		strength -= 1
 		if (strength <= 0)
@@ -56,7 +57,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bee/Life()
+/mob/living/simple_animal/hostile/retaliate/bee/Life()
 	if(!loner && strength && !parent && prob(7-strength))
 		strength -= 1
 
@@ -67,8 +68,7 @@
 
 	..()
 
-
-/mob/living/simple_animal/bee/think()
+/mob/living/simple_animal/hostile/retaliate/bee/think()
 	..()
 	if (stat != CONSCIOUS)
 		return
@@ -96,8 +96,6 @@
 			M << "<span class='warning'>You have been stung!</span>"
 			M.flash_pain()
 
-
-
 	//calm down a little bit
 	if(feral > 0 && !target_mob)
 		if(prob(feral * 20))
@@ -106,20 +104,21 @@
 		//if feral is less than 0, we're becalmed by smoke or steam
 		if(feral < 0)
 			feral += 1
-
 		if(target_mob)
 			target_mob = null
 			target_turf = null
 		if(strength > 5)
-			//calm down and spread out a little
-			var/mob/living/simple_animal/bee/B = new(get_turf(src))
-			B.strength = rand(1,5)
-			src.strength -= B.strength
-			update_icons()
-			B.update_icons()
-			if(src.parent)
-				B.parent = src.parent
-				src.parent.owned_bee_swarms.Add(B)
+			if(prob(25)) //calm down and spread out a little
+				var/mob/living/simple_animal/hostile/retaliate/bee/B = new(get_turf(src))
+				B.strength = rand(1,5)
+				src.strength -= B.strength
+				update_icons()
+				B.update_icons()
+				if(src.parent)
+					B.parent = src.parent
+					src.parent.owned_bee_swarms.Add(B)
+			else
+				feral += 1
 
 	//make some noise
 	if(prob(3))
@@ -144,7 +143,7 @@
 			target_turf = null
 			wander = 1
 
-	for(var/mob/living/simple_animal/bee/B in src.loc)
+	for(var/mob/living/simple_animal/hostile/retaliate/bee/B in src.loc)
 		if(B == src)
 			continue
 
@@ -218,19 +217,19 @@
 	animate(src, pixel_x = rand(-12, 12), pixel_y = rand(-12, 12), time = 0.5)
 
 
-/mob/living/simple_animal/bee/update_icons()
+/mob/living/simple_animal/hostile/retaliate/bee/update_icons()
 	if(strength <= 5)
 		icon_state = "bees[round(strength,1)]"
 	else
 		icon_state = "bees_swarm"
 
 //Kill it with fire!
-/mob/living/simple_animal/bee/adjustFireLoss(damage)
+/mob/living/simple_animal/hostile/retaliate/bee/adjustFireLoss(damage)
 	..(damage * 2)
 
 
 //No more grabbing bee swarms
-/mob/living/simple_animal/bee/attempt_grab(var/mob/living/grabber)
+/mob/living/simple_animal/hostile/retaliate/bee/attempt_grab(var/mob/living/grabber)
 	if (prob(strength*5))//if the swarm is big you might grab a few bees, you won't make a serious dent
 		grabber << "<span class = 'warning'>You attempt to grab the swarm, but only manage to snatch a scant handful of crushed bees.</span>"
 		apply_damage(strength*0.5, BRUTE, used_weapon = "Crushing by [grabber.name]")
@@ -240,28 +239,28 @@
 
 	return 0
 
-/mob/living/simple_animal/bee/attempt_pull(var/mob/living/grabber)
+/mob/living/simple_animal/hostile/retaliate/bee/attempt_pull(var/mob/living/grabber)
 	return attempt_grab(grabber)
 
-/mob/living/simple_animal/bee/can_fall()
+/mob/living/simple_animal/hostile/retaliate/bee/can_fall()
 	return FALSE
 
-/mob/living/simple_animal/bee/can_ztravel()
+/mob/living/simple_animal/hostile/retaliate/bee/can_ztravel()
 	return TRUE
 
-/mob/living/simple_animal/bee/CanAvoidGravity()
+/mob/living/simple_animal/hostile/retaliate/bee/CanAvoidGravity()
 	return TRUE
 
 //Bee for spawning as a hostile mob, it wont fade without a hive
-/mob/living/simple_animal/bee/standalone
+/mob/living/simple_animal/hostile/retaliate/bee/standalone
 	loner = 1
 
-/mob/living/simple_animal/bee/standalone/Initialize(mapload, var/obj/machinery/beehive/new_parent)
+/mob/living/simple_animal/hostile/retaliate/bee/standalone/Initialize(mapload, var/obj/machinery/beehive/new_parent)
 	. = ..()
 	strength = rand(4,8)
 	update_icons()
 
-/mob/living/simple_animal/bee/beegun
+/mob/living/simple_animal/hostile/retaliate/bee/beegun
 	maxHealth = 30
 	strength = 5
 	feral = 30

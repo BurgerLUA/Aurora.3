@@ -644,8 +644,6 @@
 //		new /obj/item/weapon/pestspray(src)
 //		new /obj/item/weapon/pestspray(src)
 
-
-
 //A crate that populates itself with randomly selected loot from randomstock.dm
 //Can be passed in a rarity value, which is used as a multiplier on the rare/uncommon chance
 //Quantity of spawns is number of discrete selections from the loot lists, default 10

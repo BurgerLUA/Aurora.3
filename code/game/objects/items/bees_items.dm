@@ -46,7 +46,7 @@
 
 /obj/item/weapon/book/manual/hydroponics_beekeeping
 	name = "The Ins and Outs of Apiculture - A Precise Art"
-	icon_state ="bookHydroponicsBees"
+	icon_state = "bookHydroponicsBeekeeping"
 	author = "Beekeeper Dave"
 	title = "The Ins and Outs of Apiculture - A Precise Art"
 	dat = {"<html>

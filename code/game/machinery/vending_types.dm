@@ -373,6 +373,7 @@
 		/obj/item/weapon/reagent_containers/glass/fertilizer/ez = 6,
 		/obj/item/weapon/reagent_containers/glass/fertilizer/l4z = 5,
 		/obj/item/weapon/reagent_containers/glass/fertilizer/rh = 3,
+		/obj/item/weapon/reagent_containers/spray/plantbgone = 2,
 		/obj/item/weapon/plantspray/pests = 20,
 		/obj/item/weapon/reagent_containers/syringe = 5,
 		/obj/item/weapon/storage/bag/plants = 5

@@ -179,14 +179,14 @@
 
 	while(beestorelease > 0)
 		while(beestorelease > swarmsize)
-			var/mob/living/simple_animal/bee/B = new(pick(spawn_turfs), src)
+			var/mob/living/simple_animal/hostile/retaliate/bee/B = new(pick(spawn_turfs), src)
 			B.feral = angry
 			B.strength = swarmsize
 			B.update_icons()
 			beestorelease -= swarmsize
 
 		//what's left over
-		var/mob/living/simple_animal/bee/B = new(pick(spawn_turfs), src)
+		var/mob/living/simple_animal/hostile/retaliate/bee/B = new(pick(spawn_turfs), src)
 		B.strength = beestorelease
 		B.icon_state = "bees[B.strength]"
 		B.feral = angry

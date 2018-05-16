@@ -17,7 +17,7 @@
 
 /obj/item/weapon/bee_net/attack_self(mob/user as mob)
 	var/turf/T = get_step(get_turf(user), user.dir)
-	for(var/mob/living/simple_animal/bee/B in T)
+	for(var/mob/living/simple_animal/hostile/retaliate/bee/B in T)
 		capture_bees(B, user)
 		break
 	..()
@@ -27,10 +27,10 @@
 /obj/item/weapon/bee_net/resolve_attackby(atom/A, mob/user)
 	if (istype(A, /turf))
 		var/turf/T = A
-		for(var/mob/living/simple_animal/bee/B in T)
+		for(var/mob/living/simple_animal/hostile/retaliate/bee/B in T)
 			capture_bees(B, user)
 			return 1
-	else if (istype(A, /mob/living/simple_animal/bee))
+	else if (istype(A, /mob/living/simple_animal/hostile/retaliate/bee))
 		capture_bees(A, user)
 		return 1
 	else if (istype(A, /obj/machinery/beehive) && caught_bees)
@@ -39,7 +39,7 @@
 	..()
 
 
-/obj/item/weapon/bee_net/proc/capture_bees(var/mob/living/simple_animal/bee/target, var/mob/living/user)
+/obj/item/weapon/bee_net/proc/capture_bees(var/mob/living/simple_animal/hostile/retaliate/bee/target, var/mob/living/user)
 
 	if (user)
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN*2)//make it harder to spamclick bees into submission
@@ -120,7 +120,7 @@
 	while(caught_bees > 0)
 		//release a few super massive swarms
 		while(caught_bees >= 5)
-			var/mob/living/simple_animal/bee/B = new(get_turf(src), null)
+			var/mob/living/simple_animal/hostile/retaliate/bee/B = new(get_turf(src), null)
 			B.feral = 0
 			if (feralbees)
 				//Theyre only angry when they come out if any of them were angry when they went in
@@ -132,7 +132,7 @@
 			caught_bees -= 6
 
 		//what's left over
-		var/mob/living/simple_animal/bee/B = new(get_turf(src), null)
+		var/mob/living/simple_animal/hostile/retaliate/bee/B = new(get_turf(src), null)
 		B.strength = caught_bees
 		B.feral = 0
 		if (feralbees)

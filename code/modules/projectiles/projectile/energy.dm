@@ -202,7 +202,7 @@
 	var/turf/T = get_turf(A)
 	if(!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/shuttle/wall) && !istype(A, /obj/structure/window) && !istype(A, /obj/machinery/door))
 		for(var/i=1, i<=8, i++)
-			var/atom/movable/x = new /mob/living/simple_animal/bee/beegun //hackmaster pro, butt fuck it
+			var/atom/movable/x = new /mob/living/simple_animal/hostile/retaliate/bee/beegun //hackmaster pro, butt fuck it
 			x.forceMove(T)
 	else
 		src.visible_message("<span class='danger'>[src] splat sickly against [T]!</span>")

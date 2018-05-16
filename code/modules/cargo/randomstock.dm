@@ -283,7 +283,7 @@ var/list/global/random_stock_large = list(
 		/mob/living/bot/secbot = 0.1)
 
 	var/list/infest_mobs_moderate = list(
-		/mob/living/simple_animal/bee/standalone = 1,
+		/mob/living/simple_animal/hostile/retaliate/bee/standalone = 1,
 		/mob/living/simple_animal/hostile/diyaab = 1,
 		/mob/living/simple_animal/hostile/viscerator = 1,
 		/mob/living/simple_animal/hostile/scarybat = 1)
