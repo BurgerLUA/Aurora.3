@@ -155,9 +155,11 @@
 				if(prob(mutation_chance))
 					t = slime_mutation[rand(1,4)]
 				var/mob/living/carbon/slime/M = new /mob/living/carbon/slime/(loc, t)
-				if(ckey)	M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+				if(ckey)
+					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
-				if(i != 1) step_away(M, src)
+				if(i != 1)
+					step_away(M, src)
 				M.Friends = Friends.Copy()
 				babies += M
 				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")

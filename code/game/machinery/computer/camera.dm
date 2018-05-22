@@ -266,6 +266,14 @@
 		network = engineering_networks.Copy()
 	. = ..()
 
+/obj/machinery/computer/security/xenobiology
+	name = "xenobiology camera monitor"
+	desc = "Used to monitor contained lifeforms."
+	icon_screen = "engineeringcameras"
+	circuit = /obj/item/weapon/circuitboard/security/engineering
+	light_color = "#FAC54B"
+	network = list("Xenobiology")
+
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
 	desc = "Used to access the built-in cameras in helmets."

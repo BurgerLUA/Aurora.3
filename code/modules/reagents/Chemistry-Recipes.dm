@@ -1159,52 +1159,92 @@
 
 /datum/chemical_reaction/slime/crit/on_reaction(var/datum/reagents/holder)
 	var/blocked = list(
+		/mob/living/simple_animal/adultslime,
+		/mob/living/simple_animal/bee,
+		/mob/living/simple_animal/bee/beegun,
+		/mob/living/simple_animal/bee/standalone,
+		/mob/living/simple_animal/borer,
+		/mob/living/simple_animal/borer/roundstart,
+		/mob/living/simple_animal/cat/fluff,
+		/mob/living/simple_animal/cat/fluff/Runtime,
+		/mob/living/simple_animal/cat/fluff/bones,
+		/mob/living/simple_animal/cat/penny,
+		/mob/living/simple_animal/construct,
+		/mob/living/simple_animal/construct/armoured,
+		/mob/living/simple_animal/construct/behemoth,
+		/mob/living/simple_animal/construct/builder,
+		/mob/living/simple_animal/construct/harvester,
+		/mob/living/simple_animal/construct/wraith,
+		//mob/living/simple_animal/corgi/ian,
+		/mob/living/simple_animal/corgi/Lisa,
+		/mob/living/simple_animal/corgi/fox/Chauncey,
+		/mob/living/simple_animal/crab/Coffee,
+		/mob/living/simple_animal/familiar,
+		/mob/living/simple_animal/familiar/carcinus,
+		/mob/living/simple_animal/familiar/goat,
+		/mob/living/simple_animal/familiar/horror,
+		/mob/living/simple_animal/familiar/pet,
+		/mob/living/simple_animal/familiar/pet/cat,
+		/mob/living/simple_animal/familiar/pike,
 		/mob/living/simple_animal/hostile,
+		//mob/living/simple_animal/hostile/xeno/queen,
+		//mob/living/simple_animal/hostile/xeno/queen/large,
+		/mob/living/simple_animal/hostile/bear/Hudson,
+		/mob/living/simple_animal/hostile/carp/holodeck,
+		/mob/living/simple_animal/hostile/commanded,
+		///mob/living/simple_animal/hostile/commanded/columbo,
+		/mob/living/simple_animal/hostile/creature/cult,
+		/mob/living/simple_animal/hostile/faithless/cult,
+		/mob/living/simple_animal/hostile/faithless/wizard,
+		/mob/living/simple_animal/hostile/greatworm,
+		/mob/living/simple_animal/hostile/greatwormking,
+		/mob/living/simple_animal/hostile/hivebot,
+		/mob/living/simple_animal/hostile/hivebot/range,
+		/mob/living/simple_animal/hostile/hivebot/rapid,
+		/mob/living/simple_animal/hostile/hivebot/strong,
+		/mob/living/simple_animal/hostile/hivebot/tele,
+		/mob/living/simple_animal/hostile/lesserworm,
+		/mob/living/simple_animal/hostile/mimic,
+		/mob/living/simple_animal/hostile/mimic/copy,
+		/mob/living/simple_animal/hostile/mimic/crate,
 		/mob/living/simple_animal/hostile/pirate,
 		/mob/living/simple_animal/hostile/pirate/ranged,
+		/mob/living/simple_animal/hostile/retaliate,
+		/mob/living/simple_animal/hostile/retaliate/clown,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone,
 		/mob/living/simple_animal/hostile/russian,
 		/mob/living/simple_animal/hostile/russian/ranged,
+		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/syndicate,
 		/mob/living/simple_animal/hostile/syndicate/melee,
 		/mob/living/simple_animal/hostile/syndicate/melee/space,
 		/mob/living/simple_animal/hostile/syndicate/ranged,
 		/mob/living/simple_animal/hostile/syndicate/ranged/space,
-		/mob/living/simple_animal/hostile/alien/queen/large,
-		/mob/living/simple_animal/hostile/faithless,
-		/mob/living/simple_animal/hostile/faithless/wizard,
-		/mob/living/simple_animal/hostile/retaliate,
-		/mob/living/simple_animal/hostile/retaliate/clown,
-		/mob/living/simple_animal/hostile/alien,
-		/mob/living/simple_animal/hostile/alien/drone,
-		/mob/living/simple_animal/hostile/alien/sentinel,
-		/mob/living/simple_animal/hostile/alien/queen,
-		/mob/living/simple_animal/hostile/alien/queen/large,
-		/mob/living/simple_animal/hostile/true_changeling,
-		/mob/living/simple_animal/hostile/commanded,
-		/mob/living/simple_animal/hostile/commanded/dog,
-		/mob/living/simple_animal/hostile/commanded/dog/amaskan,
-		/mob/living/simple_animal/hostile/commanded/dog/columbo,
-		/mob/living/simple_animal/hostile/commanded/dog/pug,
-		/mob/living/simple_animal/hostile/commanded/bear,
-		/mob/living/simple_animal/hostile/greatworm,
-		/mob/living/simple_animal/hostile/lesserworm,
-		/mob/living/simple_animal/hostile/greatwormking
+		/mob/living/simple_animal/hostile/tree,
+		/mob/living/simple_animal/hostile/viscerator,
+		/mob/living/simple_animal/mouse/familiar,
+		/mob/living/simple_animal/mouse/familiar/familiar,
+		/mob/living/simple_animal/parrot/Poly,
+		/mob/living/simple_animal/penguin/holodeck,
+		/mob/living/simple_animal/penguin/holodeck/baby,
+		/mob/living/simple_animal/penguin/holodeck/emperor,
+		/mob/living/simple_animal/shade/narsie,
+		/mob/living/simple_animal/slime,
+		/mob/living/simple_animal/slime/adult,
+		/mob/living/simple_animal/space_worm,
+		/mob/living/simple_animal/space_worm/head,
+		/mob/living/simple_animal/spiderbot
 	)
 	//exclusion list for things you don't want the reaction to create.
-	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+	var/list/critters = typesof(/mob/living/simple_animal) - blocked // list of possible hostile mobs
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
 		if(M.eyecheck(TRUE) <= 0)
 			flick("e_flash", M.flash)
 
-	for(var/i = 1, i <= 5, i++)
-		var/chosen = pick(critters)
-		var/mob/living/simple_animal/hostile/C = new chosen
-		C.faction = "slimesummon"
-		C.loc = get_turf(holder.my_atom)
-		if(prob(50))
-			for(var/j = 1, j <= rand(1, 3), j++)
-				step(C, pick(NORTH,SOUTH,EAST,WEST))
+	var/chosen = pick(critters)
+	var/mob/living/simple_animal/C = new chosen
+	C.loc = get_turf(holder.my_atom)
 	..()
 
 //Silver
@@ -1421,7 +1461,7 @@
 
 /datum/chemical_reaction/slime/explosion/on_reaction(var/datum/reagents/holder)
 	..()
-	sleep(50)
+	sleep(5 SECONDS)
 	explosion(get_turf(holder.my_atom), 1, 3, 6)
 
 //Light Pink
@@ -1452,6 +1492,49 @@
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
 	Z.announce_to_ghosts()
+
+//Rainbow
+/datum/chemical_reaction/slime/rainbow
+	name = "Slime Liberty"
+	id = "m_liberty"
+	result = null
+	required_reagents = list("phoron" = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/rainbow/on_reaction(var/datum/reagents/holder)
+	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
+		if(M.eyecheck(TRUE) < FLASH_PROTECTION_MODERATE)
+			flick("e_flash", M.flash)
+
+	for(var/i = 1, i <= 4 + rand(1,2), i++)
+		var/obj/B = new /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
+		if(B)
+			B.loc = get_turf(holder.my_atom)
+			if(prob(50))
+				for(var/j = 1, j <= rand(1, 3), j++)
+					step(B, pick(NORTH, SOUTH, EAST, WEST))
+
+
+//Bluespace
+/datum/chemical_reaction/slime/bluespace
+	name = "Bluespace Prophet"
+	id = "m_bluespace"
+	result = null
+	required_reagents = list("phoron" = 1)
+	result_amount = 1
+	required = /obj/item/slime_extract/bluespace
+
+/datum/chemical_reaction/slime/golem/on_reaction(var/datum/reagents/holder)
+	for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
+		if(H.eyecheck(TRUE) < FLASH_PROTECTION_MODERATE)
+			flick("e_flash", H.flash)
+			H.gain_trauma(/datum/brain_trauma/special/bluespace_prophet)
+
+
+
+
 
 /*
 ====================

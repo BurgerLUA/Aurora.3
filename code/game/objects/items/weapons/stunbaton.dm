@@ -259,7 +259,7 @@
 
 	..()
 
-/obj/item/weapon/melee/baton/slime // sprites
+/obj/item/weapon/melee/baton/stunrod/slime
 	name = "Slime Baton"
 	desc = "A special baton used to help deal with agressive slimes. It is effective in making them less pissed off... Or more pissed off."
 	icon = 'icons/obj/stunrod.dmi'

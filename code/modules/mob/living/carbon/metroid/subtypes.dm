@@ -70,7 +70,16 @@
 			slime_mutation[2] = "green"
 			slime_mutation[3] = "black"
 			slime_mutation[4] = "black"
-		// Tier 5
+		if("black")
+			slime_mutation[1] = "black"
+			slime_mutation[2] = "black"
+			slime_mutation[3] = "black"
+			slime_mutation[4] = "rainbow"
+		if("rainbow")
+			slime_mutation[1] = "orange"
+			slime_mutation[2] = "metal"
+			slime_mutation[3] = "blue"
+			slime_mutation[4] = "purple"
 		else
 			slime_mutation[1] = colour
 			slime_mutation[2] = colour

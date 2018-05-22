@@ -8,8 +8,8 @@
 	mob_size = 4
 	composition_reagent = "slimejelly"
 	layer = 5
-	maxHealth = 150
-	health = 150
+	maxHealth = 100
+	health = 100
 	gender = NEUTER
 
 	update_icon = 0
@@ -49,11 +49,15 @@
 	var/Atkcool = 0 // attack cooldown
 	var/SStun = 0 // NPC stun variable. Used to calm them down when they are attacked while feeding, or they will immediately re-attach
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while. The part about freeze gun is a lie
-	var/hurt_temperature = T0C-50 // slime keeps taking damage when its bodytemperature is below this
-	var/die_temperature = 50 // slime dies instantly when its bodytemperature is below this
+
+	var/thrive_temperature = T0C + 30
+	var/natural_temperature = T0C + 20
+	var/hurt_temperature = T0C
+	var/die_temperature = T0C - 10
+
+	var/talkchance = 10
 
 	///////////TIME FOR SUBSPECIES
-
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
@@ -77,27 +81,121 @@
 	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	regenerate_icons()
 
+	switch(sanitizedcolour)
+		if("grey")
+
+		if("purple")
+
+		if("metal")
+			maxHealth *= 1.25
+			health *= 1.25
+			thrive_temperature = T0C + 40
+			natural_temperature = T0C + 20
+			hurt_temperature = T0C - 20
+			die_temperature = T0C - 40
+			talkchance = 5
+
+		if("orange")
+			thrive_temperature = T0C + 60
+			natural_temperature = T0C + 30
+			hurt_temperature = T0C + 15
+			die_temperature = T0C
+			talkchance = 10
+
+		if("blue")
+			thrive_temperature = T0C
+			natural_temperature = T0C + 5
+			hurt_temperature = T0C + 25
+			die_temperature = T0C + 35
+			talkchance = 5
+
+		if("dark blue")
+			thrive_temperature = T0C - 20
+			natural_temperature = T0C - 10
+			hurt_temperature = T0C
+			die_temperature = T0C + 10
+			talkchance = 10
+
+		if("dark purple")
+			thrive_temperature = T0C + 50
+			natural_temperature = T0C + 25
+			hurt_temperature = T0C + 10
+			die_temperature = T0C
+			talkchance = 10
+
+		if("yellow")
+			powerlevel = 10
+			thrive_temperature = T0C + 20
+			natural_temperature = T0C + 25
+			hurt_temperature = T0C + 10
+			die_temperature = T0C
+			talkchance = 20
+
+		if("silver")
+			maxHealth *= 1.25
+			health *= 1.25
+			thrive_temperature = T0C + 40
+			natural_temperature = T0C + 20
+			hurt_temperature = T0C - 20
+			die_temperature = T0C - 40
+			talkchance = 5
+
+		if("red")
+			rabid = 1
+			thrive_temperature = T0C + 20
+			natural_temperature = T0C + 25
+			hurt_temperature = T0C + 10
+			die_temperature = T0C
+			talkchance = 30
+
+		if("gold")
+			maxHealth *= 1.25
+			health *= 1.25
+			thrive_temperature = T0C + 40
+			natural_temperature = T0C + 20
+			hurt_temperature = T0C - 20
+			die_temperature = T0C - 40
+			talkchance = 5
+
+		if("oil")
+			maxHealth *= 1.25
+			health *= 1.25
+			thrive_temperature = T0C + 40
+			natural_temperature = T0C + 20
+			hurt_temperature = T0C - 20
+			die_temperature = T0C - 40
+			talkchance = 5
+
+		if("black")
+			hurt_temperature = 1 //Never die or get hurt by temperature
+			die_temperature = 0
+			talkchance = 0
+
+		if("adamantine")
+			maxHealth *= 2
+			health *= 2
+			thrive_temperature = T0C + 40
+			natural_temperature = T0C + 20
+			hurt_temperature = T0C - 20
+			die_temperature = T0C - 40
+			talkchance = 5
+
 /mob/living/carbon/slime/movement_delay()
-	if (bodytemperature >= 330.23) // 135 F
+
+	if (is_thriving())
 		return -1	// slimes become supercharged at high temperatures
+
+	if (is_dying())
+		return 1000 //Frozen when dying
 
 	var/tally = 0
 
+	if (is_hurting())
+		tally += (hurt_temperature - bodytemperature) / 10 * 1.75
+
 	var/health_deficiency = (maxHealth - health)
-	if(health_deficiency >= 30) tally += (health_deficiency / 25)
-
-	if (bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-
-	if(reagents)
-		if(reagents.has_reagent("hyperzine")) // Hyperzine slows slimes down
-			tally *= 2
-
-		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
-			tally *= 5
-
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
+	if(health_deficiency)
+		tally += (health_deficiency / 10)
 
 	return tally + config.slime_delay
 
@@ -164,9 +262,22 @@
 
 		stat(null,"Power Level: [powerlevel]")
 
+/mob/living/carbon/slime/proc/is_frost_based()
+	return thrive_temperature < die_temperature
+
+/mob/living/carbon/slime/proc/is_thriving()
+	return (bodytemperature > thrive_temperature && !is_frost_based()) || (bodytemperature < thrive_temperature && is_frost_based())
+
+/mob/living/carbon/slime/proc/is_hurting()
+	return (bodytemperature < hurt_temperature && !is_frost_based()) || (bodytemperature > hurt_temperature && is_frost_based())
+
+/mob/living/carbon/slime/proc/is_dying()
+	return (bodytemperature < die_temperature && !is_frost_based()) || (bodytemperature > die_temperature && is_frost_based())
+
 /mob/living/carbon/slime/adjustFireLoss(amount)
-	..(-abs(amount)) // Heals them
-	return
+	bodytemperature += amount * 0.25
+	if(!is_frost_based())
+		return
 
 /mob/living/carbon/slime/bullet_act(var/obj/item/projectile/Proj)
 	attacked += 10
@@ -174,7 +285,8 @@
 	return 0
 
 /mob/living/carbon/slime/emp_act(severity)
-	powerlevel = 0 // oh no, the power!
+	visible_message("<span class='warning'>\The [src] turns dull...</span>")
+	powerlevel = 0
 	..()
 
 /mob/living/carbon/slime/ex_act(severity)
@@ -373,6 +485,7 @@
 	return 0
 
 /mob/living/carbon/slime/var/co2overloadtime = null
+
 /mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/slime/toggle_throw_mode()

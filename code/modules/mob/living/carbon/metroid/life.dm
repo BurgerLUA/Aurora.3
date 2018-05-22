@@ -24,54 +24,48 @@
 		adjustToxLoss(rand(10,20))
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
-	var/loc_temp = T0C
-	if(istype(get_turf(src), /turf/space))
-		//environment_heat_capacity = loc:heat_capacity
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
+	var/turf/loc_turf = get_turf(src)
+	if(istype(loc_turf, /turf/space))
+		var/loc_temp = loc_turf.temperature
+		var/temp_difference = bodytemperature - loc_temp
+		bodytemperature -= round(temp_difference*0.25)
 	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		loc_temp = loc:air_contents.temperature
+		var/loc_temp = loc:air_contents.temperature
+		var/temp_difference = bodytemperature - loc_temp
+		bodytemperature -= round(temp_difference*0.25)
 	else
-		loc_temp = environment.temperature
+		var/loc_temp = environment.temperature
+		var/temp_difference = bodytemperature - loc_temp
+		bodytemperature -= round(temp_difference*0.25)
+		environment.temperature += round(temp_difference*0.25)
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	if(Victim && Victim.bodytemperature)
+		var/loc_temp = Victim.bodytemperature
+		var/temp_difference = bodytemperature - loc_temp
+		bodytemperature -= round(temp_difference*0.25)
+		Victim.bodytemperature += round(temp_difference*0.25)
 
-	//Account for massive pressure differences
+	var/temp_difference = bodytemperature - natural_temperature
+	bodytemperature += round(temp_difference*0.1)
 
-	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
-
-		if(bodytemperature <= hurt_temperature)
-			if(bodytemperature <= die_temperature)
-				adjustToxLoss(200)
-			else
-				// could be more fancy, but doesn't worth the complexity: when the slimes goes into a cold area
-				// the damage is mostly determined by how fast its body cools
-				adjustToxLoss(30)
-
-	updatehealth()
+	if(is_dying())
+		adjustToxLoss(maxHealth)
+	else if(is_hurting())
+		adjustToxLoss(maxHealth*0.10)
+	else if(is_thriving())
+		adjustOxyLoss(1)
+		adjustToxLoss(1)
+		adjustFireLoss(1)
+		adjustCloneLoss(1)
+		adjustBruteLoss(1)
+	else
+		adjustOxyLoss(-0.25)
+		adjustToxLoss(-0.25)
+		adjustFireLoss(-0.25)
+		adjustCloneLoss(-0.25)
+		adjustBruteLoss(-0.25)
 
 	return //TODO: DEFERRED
-
-/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
 
 /mob/living/carbon/slime/handle_chemicals_in_body()
 	chem_effects.Cut()
@@ -101,13 +95,6 @@
 
 	if (halloss)
 		halloss = 0
-
-	if(prob(30))
-		adjustOxyLoss(-1)
-		adjustToxLoss(-1)
-		adjustFireLoss(-1)
-		adjustCloneLoss(-1)
-		adjustBruteLoss(-1)
 
 	if (src.stat == DEAD)
 		src.lying = 1
@@ -163,7 +150,7 @@
 
 	if(nutrition <= 0)
 		nutrition = 0
-		adjustToxLoss(rand(1,3))
+		adjustToxLoss(2)
 		if (client && prob(5))
 			src << "<span class='danger'>You are starving!</span>"
 
@@ -172,26 +159,28 @@
 		amount_grown++
 
 /mob/living/carbon/slime/proc/handle_targets()
-	if(attacked > 50) attacked = 50 // Let's not get into absurdly long periods of rage
+	if(attacked > 50)
+		attacked = 50 // Let's not get into absurdly long periods of rage
 
 	if(attacked > 0)
 		attacked--
 
 	if(Discipline > 0)
-
 		if(Discipline >= 5 && rabid)
-			if(prob(60)) rabid = 0
-
+			if(prob(60))
+				rabid = 0
 		if(prob(10))
 			Discipline--
 
-	if(!canmove) return
+	if(!canmove)
+		return
 
-	if(Victim) return // if it's eating someone already, continue eating!
+	if(Victim)
+		return
 
 	if(Target)
 		--target_patience
-		if (target_patience <= 0 || SStun || Discipline || attacked) // Tired of chasing or something draws out attention
+		if(target_patience <= 0 || SStun || Discipline || attacked) // Tired of chasing or something draws out attention
 			target_patience = 0
 			Target = null
 
@@ -227,7 +216,7 @@
 				if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 					targets += L // Possible target found!
 
-				if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+				if(istype(L, /mob/living/carbon/human)) //Ignore slimepeople
 					var/mob/living/carbon/human/H = L
 					if(H.species.name == "Slime")
 						continue
@@ -466,7 +455,7 @@
 				friends_near += M
 		if (nutrition < get_hunger_nutrition()) t += 10
 		if (nutrition < get_starve_nutrition()) t += 10
-		if (prob(2) && prob(t))
+		if (prob(talkchance) && prob(t))
 			var/phrases = list()
 			if (Target) phrases += "[Target]... looks tasty..."
 			if (nutrition < get_starve_nutrition())
@@ -489,24 +478,31 @@
 				phrases += "Purr..."
 			if (attacked)
 				phrases += "Grrr..."
-			if (getToxLoss() > 30)
-				phrases += "Cold..."
-			if (getToxLoss() > 60)
-				phrases += "So... cold..."
-				phrases += "Very... cold..."
-			if (getToxLoss() > 90)
-				phrases += "..."
-				phrases += "C... c..."
+			switch(getToxLoss())
+				if (0 to 30)
+					phrases += "Cold..."
+				if (30 to 60)
+					phrases += "So... cold..."
+				if (60 to 90)
+					phrases += "..."
+					phrases += "C... c..."
 			if (Victim)
 				phrases += "Nom..."
 				phrases += "Tasty..."
-			if (powerlevel > 3) phrases += "Bzzz..."
-			if (powerlevel > 5) phrases += "Zap..."
-			if (powerlevel > 8) phrases += "Zap... Bzz..."
-			if (mood == "sad") phrases += "Bored..."
-			if (slimes_near) phrases += "Brother..."
-			if (slimes_near > 1) phrases += "Brothers..."
-			if (dead_slimes) phrases += "What happened?"
+			if (powerlevel > 3)
+				phrases += "Bzzz..."
+			if (powerlevel > 5)
+				phrases += "Zap..."
+			if (powerlevel > 8)
+				phrases += "Zap... Bzz..."
+			if (mood == "sad")
+				phrases += "Bored..."
+			if (slimes_near)
+				phrases += "Brother..."
+			if (slimes_near > 1)
+				phrases += "Brothers..."
+			if (dead_slimes)
+				phrases += "Dead brothers..."
 			if (!slimes_near)
 				phrases += "Lonely..."
 			for (var/M in friends_near)

@@ -127,6 +127,19 @@
 	.. ()
 	if(alien == IS_VAURCA)
 		affect_blood(M, alien, removed * 0.25)
+	else if(istype(M, /mob/living/carbon/slime))
+		var/mob/living/carbon/slime/S = M
+		S.adjustToxLoss(80 * removed)
+		if(!S.client)
+			if(S.Target)
+				S.Target = null
+				++S.Discipline
+		if(dose == removed)
+			S.visible_message("<span class='warning'>[S]'s flesh violently sizzles where the cardox touches it!</span>", "<span class='danger'>Your flesh violently burns in the cardox!</span>")
+
+
+
+
 
 /datum/reagent/toxin/cardox/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(alien == IS_VAURCA)
@@ -139,7 +152,6 @@
 	holder.remove_reagent(conflicting.id, amount)
 
 /datum/reagent/toxin/cardox/touch_turf(var/turf/T, var/amount)
-
 	if(amount >= 1)
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(amount*10)
