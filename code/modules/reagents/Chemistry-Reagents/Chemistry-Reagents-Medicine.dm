@@ -105,6 +105,23 @@
 	M.hallucination = max(0, M.hallucination - 9 * removed)
 	M.adjustToxLoss(-4 * removed)
 
+
+/datum/reagent/dylovenep
+	name = "Dylovene Plus"
+	id = "anti_toxin_plus"
+	description = "Dylovene plus is a super-strength antitoxin that excels at healing poison."
+	reagent_state = LIQUID
+	color = "#00A000"
+	scannable = 1
+
+	taste_description = "a roll of gauze"
+
+/datum/reagent/dylovenep/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	M.drowsyness = max(0, M.drowsyness - 6 * removed)
+	M.hallucination = max(0, M.hallucination - 9 * removed)
+	M.adjustToxLoss(-100 * removed)
+	metabolism = REM * 2
+
 /datum/reagent/dexalin
 	name = "Dexalin"
 	id = "dexalin"
@@ -953,7 +970,61 @@
 		/datum/brain_trauma/severe/pacifism = 25
 	)
 	messagedelay = 30
-	ingest_mul = 0 //Stomach acid will melt the nanobots
+	ingest_mul = 0
+
+/datum/reagent/mental/morphineus
+	name = "Morphineus"
+	id = "morphineus"
+	description = "This highly addictive, potent relaxation drug causes the user to fall into a complete trance upon consumption. Popularized by the street gangs of Eridani for it's potency and incredibly addictive properties."
+	reagent_state = LIQUID
+	color = "#FF0000"
+	metabolism = 0.02 * REM
+	data = 0
+	scannable = 0
+	taste_description = "red"
+	goodmessage = list("You feel utterly blissful.","You're in a trance.","You are filled with utter ectasy.")
+	badmessage = list("You strart to crave for more drugs...","You need your fix...","You feel like you need more drugs...")
+	worstmessage = list("You need your fix, now!","You need more drugs!","You feel reality collapsing onto you!")
+	suppress_traumas  = list(
+		/datum/brain_trauma/severe/monophobia = 5,
+		/datum/brain_trauma/mild/phobia/ = 10
+	)
+	dosage_traumas = list(
+		/datum/brain_trauma/severe/pacifism = 10
+	)
+	withdrawal_traumas = list(
+		/datum/brain_trauma/mild/hallucinations  = 200
+		/datum/brain_trauma/severe/split_personality = 200,
+		/datum/brain_trauma/special/imaginary_friend = 200
+	)
+	messagedelay = 60
+	ingest_mul = 0
+
+/datum/reagent/mental/morphineus/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	. = ..()
+	if(volume > max_dose*0.5)
+		M.adjustHalLoss(-1)
+		M.druggy = max(M.druggy, 100)
+		M.dizziness = max(150, M.dizziness)//Setting dizziness directly works as long as the make_dizzy proc is called after to spawn the process
+		M.make_dizzy(4)
+		M.confused = max(M.confused, 20)
+		M.add_chemical_effect(CE_STABLE)
+		M.add_chemical_effect(CE_PAINKILLER, 400)
+		if(prob(10))
+			M.emote(pick("twitch", "drool", "moan", "giggle"))
+	else
+		M.jitteriness = max(M.jitteriness + 20, 0)
+		if(prob(10))
+			if(!usr.canmove || M.stat || M.restrained())
+				M.to_chat(M,"<span class='danger'>Your body itches painfully!</span>")
+				M.adjustHalLoss(5)
+				M.emote("twitch")
+			else
+				M.to_chat(M,"<span class='danger'>You scratch at your body!</span>")
+				M.adjustBruteLoss(5)
+				M.custom_emote(1, "scratches their body vigorously!")
+
+
 
 //Things that are not cured by medication:
 //Dumbness
