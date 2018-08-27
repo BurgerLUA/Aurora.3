@@ -474,7 +474,7 @@
 	reagents.add_reagent("tricordrazine", 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
-	name = "candy"
+	name = "\improper Getmore Noggie Nougat Bar"
 	desc = "Nougat, love it or hate it. Made with real sugar, and no artificial preservatives!"
 	icon_state = "candy"
 	trash = /obj/item/trash/candy

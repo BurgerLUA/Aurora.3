@@ -32,6 +32,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT
 
 	last_world_time = world.time
 
+/datum/event_container/proc/start_roundstart_events()
+
 /datum/event_container/proc/start_event()
 	if(!next_event)	// If non-one has explicitly set an event, randomly pick one
 		next_event = acquire_event()
@@ -50,7 +52,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT
 	else
 		// If not, wait for one minute, instead of one tick, before checking again.
 		next_event_time += (60 * 10)
-
 
 /datum/event_container/proc/acquire_event()
 	if(available_events.len == 0)
@@ -121,6 +122,27 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT
 	available_events -= EM
 	next_event = EM
 	return EM
+
+/datum/event_container/starting
+	severity = EVENT_LEVEL_MUNDANE
+	available_events = list(
+		// Severity level, event name, even type, base weight, role weights, one shot, min weight, max weight. Last two only used if set and non-zero
+		//Notice that this sort of thing is calculated differently. Note that if the weight is above 0, it will trigger on roundstart.
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",				/datum/event/nothing,				120),
+	)
+
+/datum/event_container/starting/proc/start_all_events()
+	//Start all the events.
+	//Only used for roundstart events but if you want to be hitler you can proc this for major events.
+	if(available_events.len == 0)
+		return
+	var/active_with_role = number_active_with_role()
+
+	for(var/datum/event_meta/EM in available_events)
+		var/event_chosen = get_weight(EM, active_with_role)
+		if(event_chosen > 0)
+			new EM.event_type(EM)
+			log_debug("Starting roundstart event '[EM.name]' of severity [severity_to_string[severity]].")
 
 
 /datum/event_container/mundane
