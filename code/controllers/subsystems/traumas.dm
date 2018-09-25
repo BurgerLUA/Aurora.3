@@ -78,7 +78,7 @@ var/datum/controller/subsystem/traumas/SStraumas
 												 /obj/item/organ/heart/skrell, /obj/item/organ/kidneys/skrell, /obj/item/organ/liver/skrell, /obj/item/organ/lungs/skrell,
 												 /obj/item/weapon/reagent_containers/food/snacks/skrellsnacks)),
 
-					   "robots" = typecacheof(list(/obj/item/device/electronic_assembly/drone, /obj/item/weapon/holder/drone, /obj/item/device/mmi/digital,
+					   "robots" = typecacheof(list(/obj/item/weapon/holder/drone, /obj/item/device/mmi/digital,
 												 /obj/item/organ/ipc_tag, /obj/machinery/computer/borgupload, /obj/item/clothing/suit/cyborg_suit,
 												 /obj/machinery/cryopod/robot, /obj/machinery/robotic_fabricator, /obj/effect/decal/cleanable/blood/gibs/robot, /obj/effect/decal/remains/robot,
 												 /obj/item/robot_parts, /obj/item/organ/cell, /obj/item/organ/data, /obj/item/toy/figure/borg)),
