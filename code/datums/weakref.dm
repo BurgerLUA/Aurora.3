@@ -1,3 +1,11 @@
+/proc/WEAKREF_TG(var/datum/input)
+	if (istype(input, /datum) && !input:gcDestroyed)
+		if(!input.weakref)
+			input.weakref = new(input)
+		return input.weakref
+
+	return null
+
 /datum/weakref
 	var/ref
 
