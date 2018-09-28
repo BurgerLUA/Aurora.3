@@ -372,3 +372,36 @@
 		. = ..()
 		reagents.add_reagent("frostoil", 60)
 		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/eznutrient
+	name = "\improper EZ Nutrient bottle"
+	desc = "A small bottle. Contains EZ Nutrient."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle-2"
+
+	Initialize()
+		. = ..()
+		reagents.add_reagent("eznutrient", 60)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/left4zed
+	name = "\improper Left-4-Zed bottle"
+	desc = "A small bottle. Contains Left-4-Zed."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle-2"
+
+	Initialize()
+		. = ..()
+		reagents.add_reagent("left4zed", 60)
+		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/robustharvest
+	name = "\improper Robust Harvest bottle"
+	desc = "A small bottle. Contains Left-4-Zed."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle-2"
+
+	Initialize()
+		. = ..()
+		reagents.add_reagent("robustharvest", 60)
+		update_icon()
