@@ -255,6 +255,7 @@
 	result_quantity = 4
 	reagent_mix = RECIPE_REAGENT_REPLACE
 
+/* TODO BURGER
 /datum/recipe/fortunecookie
 	appliance = OVEN
 	reagents = list("sugar" = 5)
@@ -302,6 +303,7 @@
 			if (!paper.info)
 				return 0
 		return .
+*/
 
 /datum/recipe/poppypretzel
 	appliance = OVEN

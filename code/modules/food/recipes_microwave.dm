@@ -141,6 +141,7 @@ I said no!
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/waffles
 
+/* TODO BURGER
 /datum/recipe/donkpocket
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
@@ -161,7 +162,7 @@ I said no!
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket //SPECIAL
-
+*/
 
 
 /datum/recipe/omelette
@@ -296,6 +297,7 @@ I said no!
 	reagents = list("water" = 5, "vodka" = 5, "psilocybin" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 
+/* TODO BURGER
 /datum/recipe/amanitajelly
 	reagents = list("water" = 5, "vodka" = 5, "amatoxin" = 5)
 	result = /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
@@ -304,7 +306,7 @@ I said no!
 		. = ..(container)
 		for (var/obj/item/weapon/reagent_containers/food/snacks/amanitajelly/being_cooked in .)
 			being_cooked.reagents.del_reagent("amatoxin")
-
+*/
 /datum/recipe/meatballsoup
 	fruit = list("carrot" = 1, "potato" = 1)
 	reagents = list("water" = 10)
@@ -625,6 +627,7 @@ I said no!
 	fruit = list("goldapple" = 1, "ambrosiadeus" = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
 
+/* TODO BURGER
 /datum/recipe/validsalad
 	fruit = list("potato" = 1, "ambrosia" = 3)
 	items = list(/obj/item/weapon/reagent_containers/food/snacks/meatball)
@@ -634,7 +637,7 @@ I said no!
 		. = ..(container)
 		for (var/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad/being_cooked in .)
 			being_cooked.reagents.del_reagent("toxin")
-
+*/
 
 
 /datum/recipe/stuffing

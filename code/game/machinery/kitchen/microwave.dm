@@ -13,8 +13,6 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
-	var/global/list/acceptable_items // List of the items you can put in
-	var/global/list/acceptable_reagents // List of the reagents you can put in
 	var/global/max_n_of_items = 20
 	var/appliancetype = MICROWAVE
 
@@ -28,27 +26,6 @@
 	. = ..()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
-	if (mapload)
-		addtimer(CALLBACK(src, .proc/setup_recipes), 0)
-	else
-		setup_recipes()
-
-/obj/machinery/microwave/proc/setup_recipes()
-	if (!LAZYLEN(acceptable_items))
-		acceptable_items = list()
-		acceptable_reagents = list()
-		for (var/datum/recipe/recipe in RECIPE_LIST(appliancetype))
-			for (var/item in recipe.items)
-				acceptable_items[item] = TRUE
-
-			for (var/reagent in recipe.reagents)
-				acceptable_reagents[reagent] = TRUE
-
-		// This will do until I can think of a fun recipe to use dionaea in -
-		// will also allow anything using the holder item to be microwaved into
-		// impure carbon. ~Z
-		acceptable_items[/obj/item/weapon/holder] = TRUE
-		acceptable_items[/obj/item/weapon/reagent_containers/food/snacks/grown] = TRUE
 
 /*******************
 *   Item Adding
@@ -102,35 +79,12 @@
 		else //Otherwise bad luck!!
 			user << "<span class='warning'>It's dirty!</span>"
 			return 1
-	else if(is_type_in_list(O,acceptable_items))
-		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>This [src] is full of ingredients, you cannot put more.</span>"
-			return 1
-		if(istype(O, /obj/item/stack) && O:get_amount() > 1) // This is bad, but I can't think of how to change it
-			var/obj/item/stack/S = O
-			new O.type (src)
-			S.use(1)
-			user.visible_message( \
-				"<span class='notice'>\The [user] has added one of [O] to \the [src].</span>", \
-				"<span class='notice'>You add one of [O] to \the [src].</span>")
-			return
-		else
-		//	user.remove_from_mob(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_from_inventory(O,src)
-			user.visible_message( \
-				"<span class='notice'>\The [user] has added \the [O] to \the [src].</span>", \
-				"<span class='notice'>You add \the [O] to \the [src].</span>")
-			return
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/drinks) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
 		)
 		if (!O.reagents)
 			return 1
-		for (var/datum/reagent/R in O.reagents.reagent_list)
-			if (!(R.id in acceptable_reagents))
-				user << "<span class='warning'>Your [O] contains components unsuitable for cookery.</span>"
-				return 1
 		return
 	else if(istype(O,/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
@@ -150,8 +104,24 @@
 		else
 			user << "<span class='notice'>You decide not to do that.</span>"
 	else
-
-		user << "<span class='warning'>You have no idea what you can cook with this [O].</span>"
+		if (contents.len>=max_n_of_items)
+			user << "<span class='warning'>This [src] is full of ingredients, you cannot put more.</span>"
+			return 1
+		if(istype(O, /obj/item/stack) && O:get_amount() > 1) // This is bad, but I can't think of how to change it
+			var/obj/item/stack/S = O
+			new O.type (src)
+			S.use(1)
+			user.visible_message( \
+				"<span class='notice'>\The [user] has added one of [O] to \the [src].</span>", \
+				"<span class='notice'>You add one of [O] to \the [src].</span>")
+			return
+		else
+		//	user.remove_from_mob(O)	//This just causes problems so far as I can tell. -Pete
+			user.drop_from_inventory(O,src)
+			user.visible_message( \
+				"<span class='notice'>\The [user] has added \the [O] to \the [src].</span>", \
+				"<span class='notice'>You add \the [O] to \the [src].</span>")
+			return
 	..()
 	src.updateUsrDialog()
 
@@ -246,7 +216,7 @@
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(RECIPE_LIST(appliancetype),src)
+	var/datum/recipe/recipe = SSrecipes.select_recipe(RECIPE_LIST(appliancetype),src)
 	var/obj/cooked
 	if (!recipe)
 		dirty += 1
@@ -295,14 +265,14 @@
 		var/obj/temp = new /obj(src) //To prevent infinite loops, all results will be moved into a temporary location so they're not considered as inputs for other recipes
 		while(valid)
 			var/list/things = list()
-			things.Add(recipe.make_food(src))
+			things.Add(SSrecipes.make_food(recipe,src))
 			cooked_items += things
 			//Move cooked things to the buffer so they're not considered as ingredients
 			for (var/atom/movable/AM in things)
 				AM.forceMove(temp)
 
 			valid = 0
-			recipe = select_recipe(RECIPE_LIST(appliancetype),src)
+			recipe = SSrecipes.select_recipe(RECIPE_LIST(appliancetype),src)
 			if (recipe && recipe.result == result)
 				sleep(2)
 				valid = 1
