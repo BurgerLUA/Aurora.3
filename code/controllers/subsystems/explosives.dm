@@ -196,14 +196,18 @@ var/datum/controller/subsystem/explosives/SSexplosives
 			CHECK_TICK
 			continue
 
-		T.ex_act(dist)
-		CHECK_TICK
+		var/obj/machinery/shielded_floor/shield = locate(/obj/machinery/shielded_floor/) in T.loc
+		var/shielded = shield && shield.use_power && shield.active
+
+		if(!shielded)
+			T.ex_act(dist)
+			CHECK_TICK
+
 		if(T)
 			for(var/atom_movable in T.contents)	//bypass type checking since only atom/movable can be contained by turfs anyway
 				var/atom/movable/AM = atom_movable
-				if(AM && AM.simulated)
+				if(AM && AM.simulated && (!shielded || AM.layer > shield.layer))
 					AM.ex_act(dist)
-
 				CHECK_TICK
 
 	var/took = (world.timeofday-start)/10
@@ -375,12 +379,16 @@ var/datum/controller/subsystem/explosives/SSexplosives
 		//															One third because there are three power levels and I
 		//															want each one to take up a third of the crater
 
-		if (T.simulated)
+		var/obj/machinery/shielded_floor/shield = locate(/obj/machinery/shielded_floor/) in T.loc
+		var/shielded = shield && shield.use_power && shield.active
+		
+		if (T.simulated && !shielded)
 			T.ex_act(severity)
+
 		if (T.contents.len > !!T.lighting_overlay)
 			for (var/subthing in T)
 				var/atom/movable/AM = subthing
-				if (AM.simulated)
+				if (AM.simulated && (!shielded || AM.layer > shield.layer))
 					AM.ex_act(severity)
 					movable_tally++
 				CHECK_TICK
