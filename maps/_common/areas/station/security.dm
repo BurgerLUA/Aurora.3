@@ -10,6 +10,10 @@
 	name = "\improper Security - Equipment Room"
 	icon_state = "security"
 
+/area/security/hallway
+	name = "\improper Security - Hallway"
+	icon_state = "security"
+
 /area/security/lobby
 	name = "\improper Security - Lobby"
 	icon_state = "security"
@@ -46,6 +50,14 @@
 
 /area/security/armoury
 	name = "\improper Security - Armory"
+	icon_state = "Warden"
+
+/area/security/processing
+	name = "\improper Security - Fine Processing"
+	icon_state = "Warden"
+
+/area/security/processing_prison
+	name = "\improper Security - Pirson Processing"
 	icon_state = "Warden"
 
 /area/security/forensics_office

@@ -55,6 +55,22 @@
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position.\nThis one has \"Cell 4\" marked on it."
 	id = "Cell 4"
 
+/obj/item/clothing/under/color/orange/cell5
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position.\nThis one has \"Cell 5\" marked on it."
+	id = "Cell 5"
+
+/obj/item/clothing/under/color/orange/cell6
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position.\nThis one has \"Cell 6\" marked on it."
+	id = "Cell 6"
+
+/obj/item/clothing/under/color/orange/cell7
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position.\nThis one has \"Cell 7\" marked on it."
+	id = "Cell 7"
+
+/obj/item/clothing/under/color/orange/cell8
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position.\nThis one has \"Cell 8\" marked on it."
+	id = "Cell 8"
+
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"

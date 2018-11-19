@@ -126,7 +126,7 @@
 
 
 /obj/structure/closet/wardrobe/orange
-	name = "prison wardrobe"
+	name = "spare prison wardrobe"
 	desc = "It's a storage unit for regulation prisoner attire."
 	icon_state = "orange"
 	icon_closed = "orange"
@@ -140,7 +140,6 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	return
-
 
 /obj/structure/closet/wardrobe/yellow
 	name = "yellow wardrobe"
