@@ -406,37 +406,41 @@ var/list/mob/living/forced_ambiance_list = new
 
 //A useful proc for events.
 //This returns a random area of the station which is meaningful. Ie, a room somewhere
-/proc/random_station_area(var/filter_players = FALSE)
+/proc/random_station_area(var/filter_players = FALSE, var/allowed_zlevels = list(2,3,4,5,6), var/list/area/area_blacklist = list(/area/shuttle,/area/solar,/area/constructionsite,/area/turbolift,/area/turret_protected) , var/list/area/area_whitelist = list())
 	var/list/possible = list()
+
 	for(var/Y in the_station_areas)
+		var/should_continue = FALSE
+
 		if(!Y)
 			continue
 		var/area/A = Y
 		if(!(A.z in current_map.station_levels))
 			continue
-		if (istype(A, /area/shuttle))
-			continue
-		if (istype(A, /area/solar) || findtext(A.name, "solar"))
-			continue
-		if (istype(A, /area/constructionsite))
-			continue
-		if (istype(A, /area/turbolift))
+		if(!(A.z in allowed_zlevels))
 			continue
 
-		//Although hostile mobs instadying to turrets is fun
-		//If there's no AI they'll just be hit with stunbeams all day and spam the attack logs.
-		if (istype(A, /area/turret_protected) || LAZYLEN(A.turret_controls))
+		for(var/area/checking in area_blacklist)
+			if(istype(A,checking))
+				should_continue = TRUE
+				return
+		if(should_continue)
+			continue
+
+		for(var/area/checking in area_whitelist)
+			if(!istype(A,checking))
+				should_continue = TRUE
+				return
+		if(should_continue)
 			continue
 
 		if(filter_players)
-			var/should_continue = FALSE
 			for(var/mob/living/carbon/human/H in human_mob_list)
 				if(!H.client)
 					continue
 				if(A == get_area(H))
 					should_continue = TRUE
 					break
-
 			if(should_continue)
 				continue
 
