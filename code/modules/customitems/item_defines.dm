@@ -2400,3 +2400,69 @@ obj/item/clothing/suit/storage/hooded/fluff/make_poncho //Raincoat Poncho - M.A.
 	icon_state = "ryn_hood"
 	item_state = "ryn_hood"
 	contained_sprite = TRUE
+
+
+/obj/item/clothing/suit/storage/fluff/diamond_jacket //Clawed Arm & Jacket - Diamond with Flaw - BurgerBB
+	name = "torn chemistry jacket"
+	desc = "The entire left side of this perfectly good jacket was torn to shreds."
+	icon = 'icons/obj/custom_items/diamond_chemjacket.dmi'
+	icon_state = "diamond_chemjacket"
+	item_state = "diamond_chemjacket"
+	contained_sprite = TRUE
+
+/obj/item/clothing/suit/storage/fluff/diamond_jacket/Initialize()
+	. = ..()
+	pockets = new/obj/item/weapon/storage/internal(src)
+	pockets.storage_slots = 1
+	pockets.max_w_class = 2
+	pockets.max_storage_space = 4
+
+/obj/item/organ/external/arm/industrial/fluff/dionaea_l_arm
+	robotize_type = PROSTHETIC_DIONA
+
+/obj/item/organ/external/hand/industrial/fluff/dionaea_l_hand
+	robotize_type = PROSTHETIC_DIONA
+
+/datum/robolimb/fluff/dionaea
+	company = PROSTHETIC_DIONA
+	desc = "This limb is covered in a strange formation of metal and organic matter."
+	icon = 'icons/mob/human_races/r_ind_diona.dmi'
+	linked_frame = "Unknown Entity"
+	species_can_use = list("Diona")
+	unavailable_at_chargen = 1
+
+/obj/item/fluff/dionaea_arm
+	name = "strange arm"
+	desc = "Is that mold?"
+	icon = 'icons/mob/human_races/r_ind_diona.dmi'
+	icon_state = "preview"
+
+/obj/item/fluff/dionaea_arm/attack_self(mob/user)
+	if(user.ckey != "burgerbb" || !ishuman(user))
+		to_chat(user,span("notice","You can't seem to figure out what to do with this."))
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(H.get_species() != "Diona")
+		to_chat(user,span("notice","It looks strangely familiar..."))
+		return
+
+	var/obj/item/organ/external/OL = H.get_organ("l_arm")
+	var/obj/item/organ/external/arm/industrial/fluff/dionaea_l_arm/NA = new(get_turf(src))
+	var/obj/item/organ/external/hand/industrial/fluff/dionaea_l_hand/NH = new(get_turf(src))
+
+	if(OL)
+		qdel(OL)
+
+	if(NA)
+		NA.replaced(H)
+		if(NH)
+			NH.replaced(H)
+		H.update_body()
+		H.updatehealth()
+		H.UpdateDamageIcon()
+
+	to_chat(user,span("notice","You awake from the daydream you had about your missing arm."))
+
+	H.drop_from_inventory(src)
+	qdel(src)
