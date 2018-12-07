@@ -200,6 +200,9 @@
 	if(!proximity)
 		return
 
+	if(is_devil(user))
+		to_chat(user,span("warning","Only mortals can use this."))
+
 	if(A.blood_DNA)
 		var/marked = pick(A.blood_DNA)
 
@@ -208,7 +211,7 @@
 				target = WEAKREF(H)
 				countenance = H.dna.species
 				to_chat(H, "<span class='cult'>You feel a strange presence looming over you.</span>")
-
+				commit_wrath()
 
 /obj/item/poppet/attack_self(mob/user as mob)
 	var/mob/living/carbon/human/H = target.resolve()

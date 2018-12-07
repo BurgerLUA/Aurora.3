@@ -405,3 +405,14 @@
 		. = ..()
 		reagents.add_reagent("phoron_salt", 60)
 		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/bottle/love_potion
+	name = "strange potion"
+	desc = "A small bottle. Unlabeled."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle-2"
+
+	Initialize()
+		. = ..()
+		reagents.add_reagent("love", 60, temperature = T0C + 40)
+		update_icon()

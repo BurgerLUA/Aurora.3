@@ -7,6 +7,22 @@ var/datum/antagonist/devil_servant/devil_servant
 	if(player.mind in devil.current_antagonists)
 		return 1
 
+var/global/devil_lust = 0
+/proc/commit_lust()
+	if(devil_lust)
+		return
+	for(var/mob/M in devil.current_antagonists)
+		M.add_spell(/spell/targeted/devil/lust)
+		devil_lust = TRUE
+
+var/global/devil_wrath = 0
+/proc/commit_wrath()
+	if(devil_wrath)
+		return
+	for(var/mob/M in devil.current_antagonists)
+		M.add_spell(/spell/targeted/devil/wrath)
+		devil_wrath = TRUE
+
 /datum/antagonist/devil
 	id = MODE_DEVIL
 	role_text = "Devil"

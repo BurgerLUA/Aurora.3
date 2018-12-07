@@ -764,6 +764,7 @@
 	var/obj/item/organ/brain/B = H.internal_organs_by_name["brain"]
 	if(!H.has_trauma_type(/datum/brain_trauma/special/love))
 		B.gain_trauma(/datum/brain_trauma/special/love,FALSE)
+		commit_lust()
 
 /datum/reagent/bottle_lightning
 	name = "Bottled Lightning"
