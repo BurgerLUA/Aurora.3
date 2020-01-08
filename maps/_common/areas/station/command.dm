@@ -15,6 +15,10 @@
 	name = "\improper AI Elevator Access"
 	icon_state = "ai_foyer"
 
+/area/bridge/aielevator
+	name = "\improper AI Elevator Entrance"
+	icon_state = "ai_foyer"
+
 /area/bridge/aibunker
 	name = "\improper Command - Bunker"
 	icon_state = "ai_foyer"
